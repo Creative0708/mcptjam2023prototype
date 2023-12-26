@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://ctg02dhvcw6nm"]
+
+[ext_resource type="Script" path="res://PlayerMove.gd" id="1_4qmlv"]
+[ext_resource type="Texture2D" uid="uid://disxf14wupqph" path="res://icon.svg" id="2_qp8uv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rymyw"]
+size = Vector2(125, 127)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Player" type="CharacterBody2D" parent="."]
+script = ExtResource("1_4qmlv")
+
+[node name="Icon" type="Sprite2D" parent="Player"]
+texture = ExtResource("2_qp8uv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(-1.5, 0.5)
+shape = SubResource("RectangleShape2D_rymyw")
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(-1.5, 0.5)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(-33, -11)
+polygon = PackedVector2Array(-346, -368, 456, -372, 463, 450, -398, 453, -396, 341, 344, 345, 340, -258, -320, -255, -286, 337, -397, 343, -414, -372)
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D"]
+polygon = PackedVector2Array(-346, -368, 456, -372, 463, 450, -398, 453, -396, 341, 344, 345, 340, -258, -320, -255, -286, 337, -397, 343, -414, -372)
