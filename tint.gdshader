@@ -1,10 +1,11 @@
-shader_type canvas_item;
+shader_type spatial;
 
 uniform vec3 color = vec3(0, 0, 0);
 uniform float mix_fac = 0;
+uniform sampler2D tex: source_color;
 
 void fragment() {
-	vec4 tex = texture(TEXTURE, UV);
-	COLOR.rgb = mix(tex.rgb, color, mix_fac);
-	COLOR.a = tex.a;
+	vec4 col = texture(tex, UV);
+	ALBEDO = mix(col.rgb, color, mix_fac);
+	ALPHA = col.a;
 }

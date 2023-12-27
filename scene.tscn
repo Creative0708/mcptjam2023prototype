@@ -1,56 +1,131 @@
-[gd_scene load_steps=10 format=3 uid="uid://ctg02dhvcw6nm"]
+[gd_scene load_steps=16 format=3 uid="uid://dmhvqwkqf388"]
 
-[ext_resource type="Script" path="res://PlayerMove.gd" id="1_4qmlv"]
-[ext_resource type="Script" path="res://CameraFollow.gd" id="1_do3yg"]
+[ext_resource type="Script" path="res://ViewportResize.gd" id="2_cmdgg"]
+[ext_resource type="Script" path="res://PlayerMove.gd" id="2_j5b4q"]
 [ext_resource type="Texture2D" uid="uid://disxf14wupqph" path="res://icon.svg" id="2_qp8uv"]
-[ext_resource type="Shader" path="res://tint.gdshader" id="3_kx1fp"]
-[ext_resource type="Script" path="res://Enemy.gd" id="4_qdcl6"]
-[ext_resource type="Texture2D" uid="uid://t7no55a7khbh" path="res://present-1/pixil-frame-0.png" id="5_2i03n"]
-[ext_resource type="Script" path="res://Test1.gd" id="6_8xn8a"]
+[ext_resource type="Script" path="res://Gun.gd" id="3_1esg4"]
+[ext_resource type="Shader" path="res://tint.gdshader" id="3_c32j2"]
+[ext_resource type="Texture2D" uid="uid://dsicnmx4r7dgg" path="res://textures/gumdrop_pistol2.png" id="3_tgxsf"]
+[ext_resource type="Script" path="res://CameraMove.gd" id="5_d5h5m"]
+[ext_resource type="Script" path="res://Camera.gd" id="8_ob1jp"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rymyw"]
-size = Vector2(128.395, 127)
+[sub_resource type="BoxShape3D" id="BoxShape3D_3c4v3"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_saj63"]
-shader = ExtResource("3_kx1fp")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t4rhq"]
+render_priority = 0
+shader = ExtResource("3_c32j2")
 shader_parameter/color = Vector3(1, 1, 1)
 shader_parameter/mix_fac = 0.0
+shader_parameter/tex = ExtResource("2_qp8uv")
 
-[node name="Node2D" type="Node2D"]
-position = Vector2(-181, 8)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fa0rl"]
+resource_name = "Material"
+cull_mode = 2
+albedo_color = Color(0.906332, 0.906332, 0.906332, 1)
+roughness = 0.5
 
-[node name="Camera" type="Camera2D" parent="."]
-position = Vector2(-1.5, 0.5)
-script = ExtResource("1_do3yg")
+[sub_resource type="ArrayMesh" id="ArrayMesh_uhq6y"]
+_surfaces = [{
+"aabb": AABB(-5.72816, -0.388176, -5.72816, 11.4563, 2.45506, 11.4563),
+"format": 34896613377,
+"index_count": 108,
+"index_data": PackedByteArray(0, 0, 6, 0, 4, 0, 0, 0, 2, 0, 6, 0, 3, 0, 9, 0, 8, 0, 3, 0, 7, 0, 9, 0, 7, 0, 11, 0, 9, 0, 7, 0, 5, 0, 11, 0, 5, 0, 3, 0, 1, 0, 5, 0, 7, 0, 3, 0, 1, 0, 8, 0, 10, 0, 1, 0, 3, 0, 8, 0, 5, 0, 10, 0, 11, 0, 5, 0, 1, 0, 10, 0, 2, 0, 17, 0, 6, 0, 2, 0, 16, 0, 17, 0, 6, 0, 19, 0, 4, 0, 6, 0, 17, 0, 19, 0, 8, 0, 14, 0, 10, 0, 8, 0, 12, 0, 14, 0, 11, 0, 13, 0, 9, 0, 11, 0, 15, 0, 13, 0, 16, 0, 13, 0, 17, 0, 16, 0, 12, 0, 13, 0, 18, 0, 12, 0, 16, 0, 18, 0, 14, 0, 12, 0, 17, 0, 15, 0, 19, 0, 17, 0, 13, 0, 15, 0, 19, 0, 14, 0, 18, 0, 19, 0, 15, 0, 14, 0, 10, 0, 15, 0, 11, 0, 10, 0, 14, 0, 15, 0, 9, 0, 12, 0, 8, 0, 9, 0, 13, 0, 12, 0, 4, 0, 18, 0, 0, 0, 4, 0, 19, 0, 18, 0, 0, 0, 16, 0, 2, 0, 0, 0, 18, 0, 16, 0),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 20,
+"vertex_data": PackedByteArray(41, 241, 243, 80, 213, 14, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 41, 241, 243, 80, 41, 241, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 213, 14, 243, 80, 213, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 213, 14, 243, 80, 41, 241, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 255, 255, 243, 80, 255, 255, 0, 0, 0, 0, 243, 80, 255, 255, 0, 0, 255, 255, 243, 80, 0, 0, 0, 0, 0, 0, 243, 80, 0, 0, 0, 0, 255, 255, 255, 255, 255, 255, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 0, 0, 41, 241, 255, 255, 41, 241, 0, 0, 213, 14, 255, 255, 41, 241, 0, 0, 41, 241, 255, 255, 213, 14, 0, 0, 213, 14, 255, 255, 213, 14, 0, 0)
+}]
+blend_shape_mode = 0
 
-[node name="Player" type="CharacterBody2D" parent="."]
-scale = Vector2(0.81, 0.81)
-script = ExtResource("1_4qmlv")
+[sub_resource type="ArrayMesh" id="ArrayMesh_m8tp4"]
+resource_name = "room_Cube"
+_surfaces = [{
+"aabb": AABB(-5.72816, -0.388176, -5.72816, 11.4563, 2.45506, 11.4563),
+"attribute_data": PackedByteArray(169, 165, 85, 122, 169, 165, 85, 122, 169, 165, 85, 122, 255, 95, 255, 127, 255, 95, 255, 127, 255, 95, 255, 127, 169, 165, 170, 69, 169, 165, 170, 69, 169, 165, 170, 69, 255, 95, 255, 63, 255, 95, 255, 63, 255, 95, 255, 63, 84, 218, 85, 122, 84, 218, 85, 122, 84, 218, 85, 122, 255, 95, 255, 191, 255, 31, 255, 127, 255, 95, 255, 191, 84, 218, 170, 69, 84, 218, 170, 69, 84, 218, 170, 69, 255, 95, 255, 255, 255, 31, 255, 63, 255, 95, 0, 0, 255, 159, 255, 63, 255, 159, 255, 63, 255, 159, 255, 255, 255, 159, 0, 0, 255, 159, 255, 127, 255, 159, 255, 127, 255, 159, 255, 191, 255, 159, 255, 191, 255, 159, 255, 63, 255, 159, 255, 63, 255, 159, 255, 63, 255, 159, 255, 63, 255, 159, 255, 255, 255, 159, 0, 0, 255, 223, 255, 63, 255, 223, 255, 63, 255, 159, 255, 127, 255, 159, 255, 127, 255, 159, 255, 127, 255, 159, 255, 127, 255, 159, 255, 191, 255, 159, 255, 191, 255, 223, 255, 127, 255, 223, 255, 127, 169, 165, 170, 69, 169, 165, 170, 69, 169, 165, 170, 69, 169, 165, 170, 69, 84, 218, 170, 69, 84, 218, 170, 69, 84, 218, 170, 69, 84, 218, 170, 69, 169, 165, 85, 122, 169, 165, 85, 122, 169, 165, 85, 122, 169, 165, 85, 122, 84, 218, 85, 122, 84, 218, 85, 122, 84, 218, 85, 122, 84, 218, 85, 122),
+"format": 34896613399,
+"index_count": 108,
+"index_data": PackedByteArray(2, 0, 19, 0, 13, 0, 2, 0, 8, 0, 19, 0, 10, 0, 27, 0, 24, 0, 10, 0, 23, 0, 27, 0, 21, 0, 30, 0, 26, 0, 21, 0, 15, 0, 30, 0, 16, 0, 9, 0, 3, 0, 16, 0, 22, 0, 9, 0, 5, 0, 25, 0, 29, 0, 5, 0, 11, 0, 25, 0, 17, 0, 28, 0, 31, 0, 17, 0, 4, 0, 28, 0, 7, 0, 52, 0, 18, 0, 7, 0, 49, 0, 52, 0, 20, 0, 63, 0, 14, 0, 20, 0, 55, 0, 63, 0, 25, 0, 43, 0, 29, 0, 25, 0, 35, 0, 43, 0, 30, 0, 36, 0, 26, 0, 30, 0, 44, 0, 36, 0, 50, 0, 38, 0, 53, 0, 50, 0, 33, 0, 38, 0, 59, 0, 34, 0, 51, 0, 59, 0, 42, 0, 34, 0, 54, 0, 47, 0, 62, 0, 54, 0, 39, 0, 47, 0, 61, 0, 41, 0, 58, 0, 61, 0, 46, 0, 41, 0, 28, 0, 45, 0, 31, 0, 28, 0, 40, 0, 45, 0, 27, 0, 32, 0, 24, 0, 27, 0, 37, 0, 32, 0, 12, 0, 57, 0, 1, 0, 12, 0, 60, 0, 57, 0, 0, 0, 48, 0, 6, 0, 0, 0, 56, 0, 48, 0),
+"material": SubResource("StandardMaterial3D_fa0rl"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 64,
+"vertex_data": PackedByteArray(41, 241, 243, 80, 213, 14, 255, 191, 41, 241, 243, 80, 213, 14, 255, 127, 41, 241, 243, 80, 213, 14, 255, 255, 255, 255, 0, 0, 0, 0, 255, 191, 255, 255, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 84, 213, 41, 241, 243, 80, 41, 241, 255, 191, 41, 241, 243, 80, 41, 241, 255, 255, 41, 241, 243, 80, 41, 241, 255, 255, 255, 255, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 255, 255, 84, 213, 213, 14, 243, 80, 213, 14, 255, 127, 213, 14, 243, 80, 213, 14, 255, 255, 213, 14, 243, 80, 213, 14, 255, 191, 0, 0, 0, 0, 0, 0, 84, 213, 0, 0, 0, 0, 0, 0, 255, 191, 0, 0, 0, 0, 0, 0, 255, 255, 213, 14, 243, 80, 41, 241, 255, 255, 213, 14, 243, 80, 41, 241, 255, 255, 213, 14, 243, 80, 41, 241, 255, 191, 0, 0, 0, 0, 255, 255, 84, 213, 0, 0, 0, 0, 255, 255, 255, 191, 0, 0, 0, 0, 255, 255, 255, 191, 255, 255, 243, 80, 255, 255, 255, 191, 255, 255, 243, 80, 255, 255, 84, 213, 0, 0, 243, 80, 255, 255, 84, 213, 0, 0, 243, 80, 255, 255, 255, 191, 255, 255, 243, 80, 0, 0, 255, 255, 255, 255, 243, 80, 0, 0, 84, 213, 0, 0, 243, 80, 0, 0, 84, 213, 0, 0, 243, 80, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 127, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 174, 241, 255, 255, 255, 255, 255, 255, 255, 191, 0, 0, 255, 255, 255, 255, 255, 191, 0, 0, 255, 255, 255, 255, 255, 127, 0, 0, 255, 255, 255, 255, 255, 255, 0, 0, 255, 255, 255, 255, 19, 242, 255, 255, 255, 255, 0, 0, 255, 255, 255, 255, 255, 255, 0, 0, 255, 255, 255, 255, 255, 255, 0, 0, 19, 242, 255, 255, 255, 255, 0, 0, 255, 191, 0, 0, 255, 255, 0, 0, 255, 191, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 174, 241, 41, 241, 255, 255, 41, 241, 255, 191, 41, 241, 255, 255, 41, 241, 255, 255, 41, 241, 255, 255, 41, 241, 255, 255, 41, 241, 255, 255, 41, 241, 174, 239, 213, 14, 255, 255, 41, 241, 255, 255, 213, 14, 255, 255, 41, 241, 255, 255, 213, 14, 255, 255, 41, 241, 186, 242, 213, 14, 255, 255, 41, 241, 255, 191, 41, 241, 255, 255, 213, 14, 255, 191, 41, 241, 255, 255, 213, 14, 255, 127, 41, 241, 255, 255, 213, 14, 255, 255, 41, 241, 255, 255, 213, 14, 186, 242, 213, 14, 255, 255, 213, 14, 255, 127, 213, 14, 255, 255, 213, 14, 255, 255, 213, 14, 255, 255, 213, 14, 174, 239, 213, 14, 255, 255, 213, 14, 255, 191, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 191, 0, 0, 255, 127, 255, 191, 255, 191, 170, 42, 170, 42, 255, 127, 255, 255, 255, 255, 255, 127, 255, 127, 255, 191, 0, 0, 255, 127, 255, 255, 255, 255, 170, 42, 170, 42, 255, 127, 255, 255, 255, 127, 255, 191, 255, 127, 0, 0, 84, 213, 84, 213, 0, 0, 255, 127, 255, 191, 255, 191, 255, 255, 255, 127, 255, 127, 255, 191, 255, 127, 0, 0, 84, 213, 84, 213, 0, 0, 255, 127, 255, 255, 255, 255, 255, 255, 255, 255, 170, 42, 170, 42, 84, 213, 84, 213, 255, 255, 255, 255, 255, 191, 255, 191, 170, 42, 170, 42, 84, 213, 84, 213, 255, 191, 255, 191, 255, 127, 255, 255, 255, 127, 255, 191, 121, 142, 194, 184, 255, 127, 0, 0, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 191, 12, 199, 26, 14, 255, 255, 255, 127, 255, 127, 255, 191, 12, 199, 26, 14, 255, 127, 0, 0, 255, 127, 255, 255, 255, 255, 255, 127, 255, 127, 255, 191, 121, 142, 194, 184, 255, 127, 255, 255, 255, 255, 255, 127, 255, 127, 255, 191, 91, 144, 209, 183, 255, 255, 255, 127, 255, 127, 255, 191, 189, 198, 124, 13, 255, 127, 0, 0, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 191, 189, 198, 124, 13, 255, 127, 255, 255, 255, 127, 255, 191, 91, 144, 209, 183, 255, 127, 0, 0)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_uhq6y")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2(-1.23456, 0)
-shape = SubResource("RectangleShape2D_rymyw")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q6bha"]
+albedo_color = Color(0.337255, 0.337255, 0.337255, 1)
 
-[node name="Sprite" type="Sprite2D" parent="Player"]
-material = SubResource("ShaderMaterial_saj63")
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_hck4a"]
+data = PackedVector3Array(5.0642, 0.3881, -5.0644, -5.0644, 0.3881, 5.0642, -5.0644, 0.3881, -5.0644, 5.0642, 0.3881, -5.0644, 5.0642, 0.3881, 5.0642, -5.0644, 0.3881, 5.0642, 5.7282, -0.3882, 5.7282, -5.7282, 0.3881, 5.7282, 5.7282, 0.3881, 5.7282, 5.7282, -0.3882, 5.7282, -5.7282, -0.3882, 5.7282, -5.7282, 0.3881, 5.7282, -5.7282, -0.3882, 5.7282, -5.7282, 0.3881, -5.7282, -5.7282, 0.3881, 5.7282, -5.7282, -0.3882, 5.7282, -5.7282, -0.3882, -5.7282, -5.7282, 0.3881, -5.7282, -5.7282, -0.3882, -5.7282, 5.7282, -0.3882, 5.7282, 5.7282, -0.3882, -5.7282, -5.7282, -0.3882, -5.7282, -5.7282, -0.3882, 5.7282, 5.7282, -0.3882, 5.7282, 5.7282, -0.3882, -5.7282, 5.7282, 0.3881, 5.7282, 5.7282, 0.3881, -5.7282, 5.7282, -0.3882, -5.7282, 5.7282, -0.3882, 5.7282, 5.7282, 0.3881, 5.7282, -5.7282, -0.3882, -5.7282, 5.7282, 0.3881, -5.7282, -5.7282, 0.3881, -5.7282, -5.7282, -0.3882, -5.7282, 5.7282, -0.3882, -5.7282, 5.7282, 0.3881, -5.7282, 5.0642, 0.3881, 5.0642, -5.0644, 2.0669, 5.0642, -5.0644, 0.3881, 5.0642, 5.0642, 0.3881, 5.0642, 5.0642, 2.0669, 5.0642, -5.0644, 2.0669, 5.0642, -5.0644, 0.3881, 5.0642, -5.0644, 2.0669, -5.0644, -5.0644, 0.3881, -5.0644, -5.0644, 0.3881, 5.0642, -5.0644, 2.0669, 5.0642, -5.0644, 2.0669, -5.0644, 5.7282, 0.3881, 5.7282, 5.7282, 2.0669, -5.7282, 5.7282, 0.3881, -5.7282, 5.7282, 0.3881, 5.7282, 5.7282, 2.0669, 5.7282, 5.7282, 2.0669, -5.7282, -5.7282, 0.3881, -5.7282, -5.7282, 2.0669, 5.7282, -5.7282, 0.3881, 5.7282, -5.7282, 0.3881, -5.7282, -5.7282, 2.0669, -5.7282, -5.7282, 2.0669, 5.7282, 5.0642, 2.0669, 5.0642, -5.7282, 2.0669, 5.7282, -5.0644, 2.0669, 5.0642, 5.0642, 2.0669, 5.0642, 5.7282, 2.0669, 5.7282, -5.7282, 2.0669, 5.7282, 5.0642, 2.0669, -5.0644, 5.7282, 2.0669, 5.7282, 5.0642, 2.0669, 5.0642, 5.0642, 2.0669, -5.0644, 5.7282, 2.0669, -5.7282, 5.7282, 2.0669, 5.7282, -5.0644, 2.0669, 5.0642, -5.7282, 2.0669, -5.7282, -5.0644, 2.0669, -5.0644, -5.0644, 2.0669, 5.0642, -5.7282, 2.0669, 5.7282, -5.7282, 2.0669, -5.7282, -5.0644, 2.0669, -5.0644, 5.7282, 2.0669, -5.7282, 5.0642, 2.0669, -5.0644, -5.0644, 2.0669, -5.0644, -5.7282, 2.0669, -5.7282, 5.7282, 2.0669, -5.7282, 5.7282, 0.3881, -5.7282, -5.7282, 2.0669, -5.7282, -5.7282, 0.3881, -5.7282, 5.7282, 0.3881, -5.7282, 5.7282, 2.0669, -5.7282, -5.7282, 2.0669, -5.7282, -5.7282, 0.3881, 5.7282, 5.7282, 2.0669, 5.7282, 5.7282, 0.3881, 5.7282, -5.7282, 0.3881, 5.7282, -5.7282, 2.0669, 5.7282, 5.7282, 2.0669, 5.7282, -5.0644, 0.3881, -5.0644, 5.0642, 2.0669, -5.0644, 5.0642, 0.3881, -5.0644, -5.0644, 0.3881, -5.0644, -5.0644, 2.0669, -5.0644, 5.0642, 2.0669, -5.0644, 5.0642, 0.3881, -5.0644, 5.0642, 2.0669, 5.0642, 5.0642, 0.3881, 5.0642, 5.0642, 0.3881, -5.0644, 5.0642, 2.0669, -5.0644, 5.0642, 2.0669, 5.0642)
+
+[node name="Scene" type="Node3D"]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -134.205
+offset_bottom = -134.205
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 1.414)
+stretch = true
+script = ExtResource("2_cmdgg")
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+audio_listener_enable_3d = true
+size = Vector2i(1152, 648)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="Player" type="CharacterBody3D" parent="SubViewportContainer/SubViewport"]
+motion_mode = 1
+script = ExtResource("2_j5b4q")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/Player"]
+shape = SubResource("BoxShape3D_3c4v3")
+
+[node name="Sprite" type="Sprite3D" parent="SubViewportContainer/SubViewport/Player"]
+transform = Transform3D(0.849856, 0, 0, 0, 0.849856, 0, 0, 0, 0.849856, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_t4rhq")
 texture = ExtResource("2_qp8uv")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-scale = Vector2(0.545, 0.541)
+[node name="GunPivot" type="Marker3D" parent="SubViewportContainer/SubViewport/Player"]
+script = ExtResource("3_1esg4")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-position = Vector2(-103, 32)
-polygon = PackedVector2Array(942, -871, 945, 456, -444, 447, -444, 354, 894, 391, 891, -825, -380, -816, -382, 346, -447, 343, -451, -868)
+[node name="Gun" type="Sprite3D" parent="SubViewportContainer/SubViewport/Player/GunPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.41645, 0, 0.185752)
+texture_filter = 0
+texture = ExtResource("3_tgxsf")
 
-[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D"]
-polygon = PackedVector2Array(942, -871, 945, 456, -444, 447, -444, 354, 894, 391, 891, -825, -380, -816, -382, 346, -447, 343, -451, -868)
+[node name="CameraPivot" type="Marker3D" parent="SubViewportContainer/SubViewport"]
+script = ExtResource("5_d5h5m")
 
-[node name="Enemy" type="Sprite2D" parent="."]
-visible = false
-script = ExtResource("4_qdcl6")
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 8.75168, 8.68259)
+projection = 1
+size = 11.761
+script = ExtResource("8_ob1jp")
 
-[node name="Pixil-frame-0" type="Sprite2D" parent="."]
-position = Vector2(-33, -11)
-scale = Vector2(2.22656, 2.22656)
-texture = ExtResource("5_2i03n")
-script = ExtResource("6_8xn8a")
+[node name="AudioListener3D" type="AudioListener3D" parent="SubViewportContainer/SubViewport/CameraPivot"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(0.748389, -0.556143, 0.361412, 0, 0.544903, 0.838499, -0.66326, -0.627524, 0.407799, 6.95764, 5.02595, 2.07927)
+light_energy = 1.669
+light_indirect_energy = 1.457
+
+[node name="Cube2" type="MeshInstance3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(0.489437, 0, 0, 0, 0.489437, 0, 0, 0, 0.489437, -0.0899512, -0.793565, -0.638979)
+mesh = SubResource("ArrayMesh_m8tp4")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_q6bha")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="SubViewportContainer/SubViewport/Cube2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/Cube2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_hck4a")
