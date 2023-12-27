@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ctg02dhvcw6nm"]
+[gd_scene load_steps=7 format=3 uid="uid://ctg02dhvcw6nm"]
 
 [ext_resource type="Script" path="res://PlayerMove.gd" id="1_4qmlv"]
 [ext_resource type="Script" path="res://CameraFollow.gd" id="1_do3yg"]
@@ -6,9 +6,15 @@
 [ext_resource type="Script" path="res://Enemy.gd" id="4_qdcl6"]
 [ext_resource type="Texture2D" uid="uid://t7no55a7khbh" path="res://present-1/pixil-frame-0.png" id="5_2i03n"]
 [ext_resource type="Script" path="res://Test1.gd" id="6_8xn8a"]
+[ext_resource type="Shader" path="res://tint.gdshader" id="3_kx1fp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rymyw"]
 size = Vector2(128.395, 127)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_saj63"]
+shader = ExtResource("3_kx1fp")
+shader_parameter/color = Vector3(1, 1, 1)
+shader_parameter/mix_fac = 0.0
 
 [node name="Node2D" type="Node2D"]
 position = Vector2(-181, 8)
@@ -21,13 +27,14 @@ script = ExtResource("1_do3yg")
 scale = Vector2(0.81, 0.81)
 script = ExtResource("1_4qmlv")
 
-[node name="Icon" type="Sprite2D" parent="Player"]
-texture = ExtResource("2_qp8uv")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2(-1.23456, 0)
 scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_rymyw")
+
+[node name="Sprite" type="Sprite2D" parent="Player"]
+material = SubResource("ShaderMaterial_saj63")
+texture = ExtResource("2_qp8uv")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 scale = Vector2(0.545, 0.541)
@@ -49,3 +56,8 @@ position = Vector2(-204.25, -171.25)
 scale = Vector2(2.22656, 2.22656)
 texture = ExtResource("5_2i03n")
 script = ExtResource("6_8xn8a")
+position = Vector2(-33, -11)
+polygon = PackedVector2Array(697, -494, 724, 653, -561, 664, -559, 530, 572, 526, 568, -362, -431, -370, -443, 529, -557, 529, -548, -500)
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D"]
+polygon = PackedVector2Array(697, -494, 724, 653, -561, 664, -559, 530, 572, 526, 568, -362, -431, -370, -443, 529, -557, 529, -548, -500)

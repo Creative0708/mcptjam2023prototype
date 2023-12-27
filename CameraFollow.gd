@@ -10,8 +10,7 @@ func _ready():
 
 func _process(delta):
 	var viewport = get_viewport()
-	var mouse_pos = (viewport.get_mouse_position() / viewport.get_visible_rect().size - Vector2(0.5, 0.5)) * 2
-	mouse_pos = mouse_pos.clamp(Vector2(-1, -1), Vector2(1, 1))
+	var mouse_pos = ((viewport.get_mouse_position() / viewport.get_visible_rect().size - Vector2(0.5, 0.5)) * 2).clamp(Vector2(-1, -1), Vector2(1, 1))
 	
 	var target_position = player.position + mouse_pos * MOUSE_LOOK_DISTANCE
 	
