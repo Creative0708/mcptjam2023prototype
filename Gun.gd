@@ -3,15 +3,30 @@ extends Node3D
 @onready var player = $".."
 
 @onready var gun = $Gun
+@onready var gun_sprite = $Gun/Sprite
+@onready var muzzle_flash = $"Gun/Sprite/Muzzle Flash"
 
-const MAX_GUN_DISTANCE = 1.2
-const MIN_GUN_DISTANCE = 0.7
+const MAX_GUN_DISTANCE = 1.1
+const MIN_GUN_DISTANCE = 0.5
 
 const GUN_LERP_FACTOR = 15
 
-const RECOIL = 0.85
+const RECOIL = 0.9
+const RECOIL_ROTATION = 0.5
+const COOLDOWN_TIME = 0.1
 
 const FIRE_SOUND = preload("res://sfx/pistol2.wav")
+
+var MUZZLE_FLASH_SPRITES = []
+
+func _init():
+	for i in 5:
+		MUZZLE_FLASH_SPRITES.push_back(load(str("res://textures/muzzle_flashes_2/pixil-frame-", i, ".png")))
+
+func _ready():
+	randomize()
+
+var gun_cooldown = 0
 
 func _process(delta):
 	var mouse_pos = Camera.world_mouse_pos()
@@ -25,18 +40,26 @@ func _process(delta):
 	elif relative_mouse_pos.length() <= MIN_GUN_DISTANCE:
 		relative_mouse_pos *= MIN_GUN_DISTANCE / relative_mouse_pos.length()
 	
-	gun.position = lerp(gun.position, relative_mouse_pos * MAX_GUN_DISTANCE, delta * GUN_LERP_FACTOR)
+	var target_gun_pos = relative_mouse_pos * MAX_GUN_DISTANCE
+	target_gun_pos.y = gun.position.y
+	
+	gun.position = lerp(gun.position, target_gun_pos, delta * GUN_LERP_FACTOR)
 	
 	var relative_mouse_pos_screen = get_viewport().get_mouse_position() - Camera.world_to_screen_space(player.position)
 	var gun_angle = -relative_mouse_pos_screen.angle()
+	var target_rotation
 	if abs(gun_angle) > PI / 2:
-		gun.rotation.z = gun_angle + PI
-		gun.flip_h = true
+		target_rotation = PI - gun_angle
+		gun_sprite.rotation.y = PI
 	else:
-		gun.rotation.z = gun_angle
-		gun.flip_h = false
+		target_rotation = gun_angle
+		gun_sprite.rotation.y = 0
 	
-	if Input.is_action_just_pressed("fire"):
+	if gun_cooldown > 0:
+		gun_cooldown -= delta
+	
+	if Input.is_action_just_pressed("fire") and not gun_cooldown > 0:
+		# Fire sound
 		var audio = AudioStreamPlayer.new()
 		audio.volume_db = -10
 		audio.stream = FIRE_SOUND
@@ -47,3 +70,16 @@ func _process(delta):
 		audio.finished.connect(delete_audio)
 		
 		gun.position *= RECOIL
+		gun_cooldown = COOLDOWN_TIME
+		
+		target_rotation += -RECOIL_ROTATION if abs(gun_angle) > PI / 2 else RECOIL_ROTATION
+		
+		# Muzzle flash
+		muzzle_flash.texture = MUZZLE_FLASH_SPRITES[randi() % MUZZLE_FLASH_SPRITES.size()]
+		muzzle_flash.visible = true
+		var hide_muzzle_flash = func hide_muzzle_flash():
+			muzzle_flash.visible = false
+		get_tree().create_timer(0.05).timeout.connect(hide_muzzle_flash)
+
+	gun_sprite.rotation.z = lerp_angle(gun_sprite.rotation.z, target_rotation, delta * GUN_LERP_FACTOR)
+	

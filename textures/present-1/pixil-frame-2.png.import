@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bonmrsrengx1s"
-path="res://.godot/imported/candycorn_rifle.png-316e2b97e1ed2143b986580f50382a8b.ctex"
+uid="uid://cw0a8ihbhfd46"
+path="res://.godot/imported/pixil-frame-2.png-e44a4e11c5d0780fb965903eeabe36d5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/candycorn_rifle.png"
-dest_files=["res://.godot/imported/candycorn_rifle.png-316e2b97e1ed2143b986580f50382a8b.ctex"]
+source_file="res://textures/present-1/pixil-frame-2.png"
+dest_files=["res://.godot/imported/pixil-frame-2.png-e44a4e11c5d0780fb965903eeabe36d5.ctex"]
 
 [params]
 

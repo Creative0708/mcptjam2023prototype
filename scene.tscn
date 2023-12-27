@@ -1,12 +1,13 @@
-[gd_scene load_steps=16 format=3 uid="uid://dmhvqwkqf388"]
+[gd_scene load_steps=17 format=3 uid="uid://dmhvqwkqf388"]
 
 [ext_resource type="Script" path="res://ViewportResize.gd" id="2_cmdgg"]
 [ext_resource type="Script" path="res://PlayerMove.gd" id="2_j5b4q"]
 [ext_resource type="Texture2D" uid="uid://disxf14wupqph" path="res://icon.svg" id="2_qp8uv"]
 [ext_resource type="Script" path="res://Gun.gd" id="3_1esg4"]
 [ext_resource type="Shader" path="res://tint.gdshader" id="3_c32j2"]
-[ext_resource type="Texture2D" uid="uid://dsicnmx4r7dgg" path="res://textures/gumdrop_pistol2.png" id="3_tgxsf"]
 [ext_resource type="Script" path="res://CameraMove.gd" id="5_d5h5m"]
+[ext_resource type="Texture2D" uid="uid://dsicnmx4r7dgg" path="res://textures/gumdrop_pistol/gumdrop_pistol2.png" id="6_65b2j"]
+[ext_resource type="Texture2D" uid="uid://c11h08ahijmhd" path="res://textures/muzzle_flashes_2/pixil-frame-0.png" id="7_3khq5"]
 [ext_resource type="Script" path="res://Camera.gd" id="8_ob1jp"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3c4v3"]
@@ -98,10 +99,31 @@ texture = ExtResource("2_qp8uv")
 [node name="GunPivot" type="Marker3D" parent="SubViewportContainer/SubViewport/Player"]
 script = ExtResource("3_1esg4")
 
-[node name="Gun" type="Sprite3D" parent="SubViewportContainer/SubViewport/Player/GunPivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.41645, 0, 0.185752)
+[node name="Gun" type="Marker3D" parent="SubViewportContainer/SubViewport/Player/GunPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.34846, 0, 1.49012e-08)
+
+[node name="Sprite" type="Sprite3D" parent="SubViewportContainer/SubViewport/Player/GunPivot/Gun"]
+transform = Transform3D(0.626086, 0, 0, 0, 0.626086, 0, 0, 0, 0.626086, 0, 0, 0)
 texture_filter = 0
-texture = ExtResource("3_tgxsf")
+texture = ExtResource("6_65b2j")
+
+[node name="Muzzle Flash" type="Sprite3D" parent="SubViewportContainer/SubViewport/Player/GunPivot/Gun/Sprite"]
+transform = Transform3D(4.0067, 0, 0, 0, 4.0067, 0, 0, 0, 4.0067, 0.98882, 0.180148, 0)
+visible = false
+texture_filter = 0
+render_priority = -1
+texture = ExtResource("7_3khq5")
+
+[node name="Muzzle Light" type="OmniLight3D" parent="SubViewportContainer/SubViewport/Player/GunPivot/Gun/Sprite/Muzzle Flash"]
+transform = Transform3D(0.398639, 0, 0, 0, 0.398639, 0, 0, 0, 0.398639, 0, 0.398639, 0)
+light_color = Color(1, 0.85, 0, 1)
+light_energy = 1.799
+
+[node name="Light" type="OmniLight3D" parent="SubViewportContainer/SubViewport/Player/GunPivot/Gun"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+light_color = Color(0.733333, 0, 1, 1)
+light_energy = 2.593
+light_size = 1.0
 
 [node name="CameraPivot" type="Marker3D" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("5_d5h5m")
