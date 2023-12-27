@@ -1,12 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://ctg02dhvcw6nm"]
+[gd_scene load_steps=10 format=3 uid="uid://ctg02dhvcw6nm"]
 
 [ext_resource type="Script" path="res://PlayerMove.gd" id="1_4qmlv"]
 [ext_resource type="Script" path="res://CameraFollow.gd" id="1_do3yg"]
 [ext_resource type="Texture2D" uid="uid://disxf14wupqph" path="res://icon.svg" id="2_qp8uv"]
+[ext_resource type="Shader" path="res://tint.gdshader" id="3_kx1fp"]
 [ext_resource type="Script" path="res://Enemy.gd" id="4_qdcl6"]
 [ext_resource type="Texture2D" uid="uid://t7no55a7khbh" path="res://present-1/pixil-frame-0.png" id="5_2i03n"]
 [ext_resource type="Script" path="res://Test1.gd" id="6_8xn8a"]
-[ext_resource type="Shader" path="res://tint.gdshader" id="3_kx1fp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rymyw"]
 size = Vector2(128.395, 127)
@@ -29,7 +29,6 @@ script = ExtResource("1_4qmlv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2(-1.23456, 0)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_rymyw")
 
 [node name="Sprite" type="Sprite2D" parent="Player"]
@@ -41,23 +40,17 @@ scale = Vector2(0.545, 0.541)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 position = Vector2(-103, 32)
-polygon = PackedVector2Array(752, -871, 763, 459, -620, 459, -626, 368, 704, 393, 726, -817, -541, -808, -566, 346, -629, 351, -617, -540, -640, -857)
+polygon = PackedVector2Array(942, -871, 945, 456, -444, 447, -444, 354, 894, 391, 891, -825, -380, -816, -382, 346, -447, 343, -451, -868)
 
 [node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D"]
-position = Vector2(-181, 8)
-polygon = PackedVector2Array(-350, -874, 942, -871, 945, 456, -444, 447, -444, 354, 894, 391, 891, -825, -380, -816, -382, 346, -447, 343, -451, -868)
+polygon = PackedVector2Array(942, -871, 945, 456, -444, 447, -444, 354, 894, 391, 891, -825, -380, -816, -382, 346, -447, 343, -451, -868)
 
 [node name="Enemy" type="Sprite2D" parent="."]
 visible = false
 script = ExtResource("4_qdcl6")
 
 [node name="Pixil-frame-0" type="Sprite2D" parent="."]
-position = Vector2(-204.25, -171.25)
+position = Vector2(-33, -11)
 scale = Vector2(2.22656, 2.22656)
 texture = ExtResource("5_2i03n")
 script = ExtResource("6_8xn8a")
-position = Vector2(-33, -11)
-polygon = PackedVector2Array(697, -494, 724, 653, -561, 664, -559, 530, 572, 526, 568, -362, -431, -370, -443, 529, -557, 529, -548, -500)
-
-[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D"]
-polygon = PackedVector2Array(697, -494, 724, 653, -561, 664, -559, 530, 572, 526, 568, -362, -431, -370, -443, 529, -557, 529, -548, -500)
