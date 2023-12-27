@@ -108,14 +108,13 @@ texture_filter = 0
 texture = ExtResource("6_65b2j")
 
 [node name="Muzzle Flash" type="Sprite3D" parent="SubViewportContainer/SubViewport/Player/GunPivot/Gun/Sprite"]
-transform = Transform3D(4.0067, 0, 0, 0, 4.0067, 0, 0, 0, 4.0067, 0.98882, 0.180148, 0)
-visible = false
+transform = Transform3D(4.0067, 0, 0, 0, 4.0067, 0, 0, 0, 4.0067, 0.98882, 0.158026, 0)
 texture_filter = 0
 render_priority = -1
 texture = ExtResource("7_3khq5")
 
 [node name="Muzzle Light" type="OmniLight3D" parent="SubViewportContainer/SubViewport/Player/GunPivot/Gun/Sprite/Muzzle Flash"]
-transform = Transform3D(0.398639, 0, 0, 0, 0.398639, 0, 0, 0, 0.398639, 0, 0.398639, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.398639, 0)
 light_color = Color(1, 0.85, 0, 1)
 light_energy = 1.799
 

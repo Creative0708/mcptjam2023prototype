@@ -72,7 +72,7 @@ func _process(delta):
 		gun.position *= RECOIL
 		gun_cooldown = COOLDOWN_TIME
 		
-		target_rotation += -RECOIL_ROTATION if abs(gun_angle) > PI / 2 else RECOIL_ROTATION
+		target_rotation += RECOIL_ROTATION
 		
 		# Muzzle flash
 		muzzle_flash.texture = MUZZLE_FLASH_SPRITES[randi() % MUZZLE_FLASH_SPRITES.size()]
