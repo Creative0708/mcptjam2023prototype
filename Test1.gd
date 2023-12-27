@@ -2,14 +2,17 @@ extends Sprite2D
 
 @onready var player = $"../Player"
 
-const MOVEMENT_SPEED = 200
+const MOVEMENT_SPEED = 300
 
 func _ready():
-	position.x = 5
-	position.y = 5
+	position = Vector2(5, 5)
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	position.x = move_toward(position.x, player.position.x, MOVEMENT_SPEED * delta)
-	position.y = move_toward(position.y, player.position.y, MOVEMENT_SPEED * delta)
+	var target_offset: Vector2 = player.position - position
+	var speed_this_frame = MOVEMENT_SPEED * delta
+	var movement = target_offset
+	# if the enemy is farther away than it can move, restrain its movement
+	if movement.length() > speed_this_frame:
+		movement *= speed_this_frame / target_offset.length()
+	
+	position += movement
