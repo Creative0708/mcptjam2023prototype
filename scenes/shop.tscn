@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://bnclilq4c67yd"]
+
+[ext_resource type="Theme" uid="uid://d17vfkp5d2dhf" path="res://assets/theme.tres" id="1_6rlbd"]
+
+[node name="Shop" type="ColorRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 90.0
+offset_top = 99.0
+offset_right = -90.0
+offset_bottom = -99.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.290196, 0.152941, 0, 1)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -271.0
+offset_top = 21.0
+offset_right = 271.0
+offset_bottom = 102.0
+grow_horizontal = 2
+theme = ExtResource("1_6rlbd")
+theme_override_font_sizes/normal_font_size = 81
+bbcode_enabled = true
+text = "[center]SHOP[/center]"

@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+class_name Player
 
 const SPEED = 8.0
 const VELOCITY_LERP_FAC = 30

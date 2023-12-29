@@ -1,0 +1,103 @@
+[gd_scene load_steps=14 format=3 uid="uid://c5whewiyd2mvs"]
+
+[ext_resource type="Script" path="res://scenes/Rifle.gd" id="1_lay77"]
+[ext_resource type="Texture2D" uid="uid://b1dgc4gk4jv8a" path="res://textures/candycorn_rifle/candycorn_rifle2.png" id="2_6f24y"]
+[ext_resource type="Texture2D" uid="uid://c11h08ahijmhd" path="res://textures/muzzle_flashes_2/pixil-frame-0.png" id="3_7qpuv"]
+[ext_resource type="Texture2D" uid="uid://c7vs5e2utnb4p" path="res://textures/muzzle_flashes_2/pixil-frame-1.png" id="3_tcxtm"]
+[ext_resource type="Texture2D" uid="uid://h5p1xws0q4qg" path="res://textures/muzzle_flashes_2/pixil-frame-2.png" id="4_5ike5"]
+[ext_resource type="Script" path="res://scripts/Gravity.gd" id="5_eof37"]
+[ext_resource type="Texture2D" uid="uid://c15bjon4nmc0i" path="res://textures/muzzle_flashes_2/pixil-frame-3.png" id="5_qyh4q"]
+[ext_resource type="Script" path="res://scripts/BulletCasing.gd" id="6_flrqj"]
+[ext_resource type="Texture2D" uid="uid://bryk6kyng1y3i" path="res://textures/muzzle_flashes_2/pixil-frame-4.png" id="6_xgiov"]
+[ext_resource type="Texture2D" uid="uid://3fhj4bap2606" path="res://textures/gumdrop_pistol/bullet_casing2.png" id="7_1uu3o"]
+[ext_resource type="Texture2D" uid="uid://bh7swbxyrld36" path="res://textures/candycorn_rifle/ornament2.png" id="8_y3no7"]
+[ext_resource type="AudioStream" uid="uid://bidbqexjyopup" path="res://sfx/rifle.wav" id="12_hwfb1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h35q7"]
+size = Vector3(0.115234, 0.0771484, 0.0878906)
+
+[node name="Rifle" type="Marker3D" node_paths=PackedStringArray("sprite", "muzzle_flash", "muzzle_light")]
+script = ExtResource("1_lay77")
+sprite = NodePath("Pivot/Sprite")
+muzzle_flash = NodePath("Pivot/Muzzle Flash")
+muzzle_light = NodePath("Pivot/Muzzle Flash/Muzzle Light")
+MAX_GUN_DISTANCE = 1.2
+GUN_LERP_FACTOR = 30
+RECOIL = 0.2
+RECOIL_ROTATION = 0.1
+MAGAZINE_CAPACITY = 24
+MUZZLE_FLASH_SPRITES = Array[Texture2D]([ExtResource("3_7qpuv"), ExtResource("3_tcxtm"), ExtResource("4_5ike5"), ExtResource("5_qyh4q"), ExtResource("6_xgiov")])
+
+[node name="Pivot" type="Marker3D" parent="."]
+
+[node name="Sprite" type="Sprite3D" parent="Pivot"]
+transform = Transform3D(0.626, 0, 0, 0, 0.626, 0, 0, 0, 1, 0, 0, 0)
+pixel_size = 0.008
+shaded = true
+texture_filter = 0
+texture = ExtResource("2_6f24y")
+
+[node name="Ornament" type="Sprite3D" parent="Pivot/Sprite"]
+transform = Transform3D(0.800752, 0, 0, 0, 0.800752, 0, 0, 0, 0.800752, 0.498112, 0.117416, 0)
+offset = Vector2(0, -19.915)
+shaded = true
+texture_filter = 0
+render_priority = 1
+texture = ExtResource("8_y3no7")
+script = ExtResource("5_eof37")
+mass = 0.2
+
+[node name="Bullet Casing" type="RigidBody3D" parent="Pivot/Sprite"]
+transform = Transform3D(1.60168, 0, 0, 0, 1.60168, 0, 0, 0, 1.00265, -0.0446561, 0.146402, 0)
+visible = false
+collision_layer = 0
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+mass = 0.05
+freeze = true
+script = ExtResource("6_flrqj")
+
+[node name="Collision" type="CollisionShape3D" parent="Pivot/Sprite/Bullet Casing"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00117494, 0.000610352, 0)
+shape = SubResource("BoxShape3D_h35q7")
+
+[node name="Sprite" type="Sprite3D" parent="Pivot/Sprite/Bullet Casing"]
+transform = Transform3D(0.610144, 0, 0, 0, 0.610144, 0, 0, 0, 0.610144, 0, 0, 0)
+texture_filter = 0
+texture = ExtResource("7_1uu3o")
+
+[node name="Muzzle Flash" type="Sprite3D" parent="Pivot"]
+transform = Transform3D(2.50838, 0, 0, 0, 2.50838, 0, 0, 0, 1, 0.971446, 0.0565586, 0)
+visible = false
+texture_filter = 0
+render_priority = -1
+texture = ExtResource("3_tcxtm")
+
+[node name="Muzzle Light" type="OmniLight3D" parent="Pivot/Muzzle Flash"]
+light_color = Color(1, 0.85, 0, 1)
+light_energy = 2.569
+light_specular = 0.074
+
+[node name="Light" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+light_color = Color(0.92549, 0, 0.388235, 1)
+light_energy = 2.706
+light_size = 5.875
+light_specular = 0.0
+
+[node name="Reload" type="AudioStreamPlayer3D" parent="."]
+attenuation_model = 3
+volume_db = -20.085
+max_polyphony = 4
+bus = &"SFX"
+attenuation_filter_cutoff_hz = 20500.0
+attenuation_filter_db = 0.0
+
+[node name="Shoot" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("12_hwfb1")
+attenuation_model = 3
+volume_db = -20.085
+max_polyphony = 4
+bus = &"SFX"
+attenuation_filter_cutoff_hz = 20500.0
+attenuation_filter_db = 0.0
