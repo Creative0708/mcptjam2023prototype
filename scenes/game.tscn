@@ -1,9 +1,7 @@
-[gd_scene load_steps=33 format=3 uid="uid://dmhvqwkqf388"]
+[gd_scene load_steps=38 format=3 uid="uid://dmhvqwkqf388"]
 
 [ext_resource type="Script" path="res://scripts/ViewportResize.gd" id="2_cmdgg"]
-[ext_resource type="PackedScene" uid="uid://b80go6330mkjr" path="res://scenes/component/enemy.tscn" id="2_dkr2t"]
 [ext_resource type="Script" path="res://scripts/Player.gd" id="2_j5b4q"]
-[ext_resource type="Texture2D" uid="uid://disxf14wupqph" path="res://icon.svg" id="2_qp8uv"]
 [ext_resource type="Script" path="res://scripts/GunHandler.gd" id="3_1esg4"]
 [ext_resource type="AudioStream" uid="uid://b68sb5x2flo2r" path="res://sfx/walk/walk1.wav" id="3_21cqk"]
 [ext_resource type="Shader" path="res://tint.gdshader" id="3_c32j2"]
@@ -12,20 +10,28 @@
 [ext_resource type="AudioStream" uid="uid://cfq3lnoo5t6d4" path="res://sfx/walk/walk3.wav" id="5_sowgn"]
 [ext_resource type="AudioStream" uid="uid://msjq4mbcbwed" path="res://sfx/walk/walk4.wav" id="6_f5ogh"]
 [ext_resource type="Script" path="res://scripts/BulletLine.gd" id="6_myman"]
+[ext_resource type="Texture2D" uid="uid://bq75iqc1k1iku" path="res://textures/sant/pixil-frame-1.png" id="8_h6uuy"]
 [ext_resource type="Script" path="res://scripts/Camera.gd" id="8_ob1jp"]
-[ext_resource type="Script" path="res://scenes/SceneGenerator.gd" id="9_8vig0"]
 [ext_resource type="Texture2D" uid="uid://b6nptul2p07pl" path="res://textures/crosshair2.png" id="9_ca1w7"]
+[ext_resource type="Texture2D" uid="uid://cga8bwkim2s0m" path="res://textures/sant/pixil-frame-0.png" id="9_csblv"]
+[ext_resource type="Texture2D" uid="uid://brerksjvx6oc6" path="res://textures/sant/pixil-frame-2.png" id="9_jcoc6"]
 [ext_resource type="Script" path="res://scripts/Crosshair.gd" id="10_0djgi"]
+[ext_resource type="Texture2D" uid="uid://bmdmq3qvrvcki" path="res://textures/sant/pixil-frame-3.png" id="10_e4ogu"]
 [ext_resource type="PackedScene" uid="uid://25pl1mvpb0ct" path="res://LineRenderer/LineRenderer.tscn" id="10_kqu4h"]
 [ext_resource type="PackedScene" uid="uid://bptre0y38ejxm" path="res://rooms/room1/room_1.tscn" id="10_qrtvj"]
 [ext_resource type="Script" path="res://scripts/PlayerTracker.gd" id="11_xks1c"]
+[ext_resource type="AudioStream" uid="uid://ioyn8cahy0hv" path="res://sfx/hurt.wav" id="12_coyaq"]
 [ext_resource type="Script" path="res://scripts/Ammo.gd" id="12_o2bgf"]
 [ext_resource type="Theme" uid="uid://d17vfkp5d2dhf" path="res://assets/theme/theme.tres" id="13_jhl6l"]
+[ext_resource type="Script" path="res://scripts/SceneGenerator.gd" id="15_48dtg"]
+[ext_resource type="Script" path="res://scripts/HealthIndicator.gd" id="21_a1o7e"]
 
 [sub_resource type="GDScript" id="GDScript_3qtnw"]
 script/source = "extends Node3D
 
 signal scene_change(String)
+
+@onready var sub_viewport = $SubViewportContainer/SubViewport
 
 @onready var gun_pivot = $SubViewportContainer/SubViewport/Player/GunPivot
 
@@ -33,8 +39,16 @@ var paused = false
 
 @onready var pause_screen = $\"CanvasLayer/Pause Screen\"
 
+const ENEMY = preload(\"res://scenes/component/enemy.tscn\")
+
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+	
+	var timer = 1.5
+	while true:
+		spawn_enemy()
+		await get_tree().create_timer(timer).timeout
+		timer *= 0.997
 
 func set_gun(gun: PackedScene):
 	gun_pivot.set_gun(gun)
@@ -49,19 +63,28 @@ func _process(delta):
 		pause_screen.update_paused(paused)
 
 func change_scene(scene: String):
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	scene_change.emit(scene)
+
+var enemy_min = Vector3(-4.7, 0.0, -5.8)
+var enemy_max = Vector3(4.6, 0.0, 1.25)
+
+func spawn_enemy():
+	var enemy = ENEMY.instantiate()
+	enemy.position = enemy_min + (enemy_max - enemy_min) * Vector3(randf(), 0.0, randf())
+	sub_viewport.add_child(enemy)
 "
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_kcauq"]
-height = 1.02115
-radius = 0.4
+[sub_resource type="BoxShape3D" id="BoxShape3D_he0o6"]
+size = Vector3(0.679688, 1.05859, 0.322388)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t4rhq"]
 render_priority = 0
 shader = ExtResource("3_c32j2")
 shader_parameter/color = Vector3(1, 1, 1)
 shader_parameter/mix_fac = 0.0
-shader_parameter/tex = ExtResource("2_qp8uv")
+shader_parameter/alpha = 1.0
+shader_parameter/tex = ExtResource("9_csblv")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tppr1"]
 transparency = 1
@@ -76,6 +99,17 @@ background_mode = 1
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
 ambient_light_energy = 0.6
+
+[sub_resource type="GDScript" id="GDScript_1dqei"]
+script/source = "extends ReferenceRect
+
+@onready var label = $RichTextLabel
+
+var lifespan = 7.0
+func _process(delta):
+	lifespan -= delta
+	label.add_theme_color_override(\"default_color\", Color(1, 1, 1, min(1, lifespan * 0.5)))
+"
 
 [sub_resource type="GDScript" id="GDScript_4cj0f"]
 script/source = "extends ReferenceRect
@@ -205,9 +239,6 @@ size = Vector2i(1152, 648)
 size_2d_override_stretch = true
 render_target_update_mode = 4
 
-[node name="Enemy" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_dkr2t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.46511, 0.146002, 0.00165844)
-
 [node name="Player" type="CharacterBody3D" parent="SubViewportContainer/SubViewport"]
 collision_layer = 8
 axis_lock_linear_y = true
@@ -217,15 +248,17 @@ axis_lock_angular_z = true
 motion_mode = 1
 script = ExtResource("2_j5b4q")
 FOOTSTEP_CLIPS = Array[AudioStream]([ExtResource("3_21cqk"), ExtResource("4_0hnrl"), ExtResource("5_sowgn"), ExtResource("6_f5ogh")])
+SANTA_TEXTURES = Array[Texture2D]([ExtResource("9_csblv"), ExtResource("8_h6uuy"), ExtResource("9_jcoc6"), ExtResource("10_e4ogu")])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.417546)
-shape = SubResource("CylinderShape3D_kcauq")
+transform = Transform3D(1, 0, 0, 0, 1.30639, 0, 0, 0, 1, 0, 0.100467, -0.0787399)
+shape = SubResource("BoxShape3D_he0o6")
 
 [node name="Sprite" type="Sprite3D" parent="SubViewportContainer/SubViewport/Player"]
-transform = Transform3D(0.849856, 0, 0, 0, 0.849856, 0, 0, 0, 0.849856, 0, 0, 0)
+transform = Transform3D(0.4029, 0, 0, 0, 0.4029, 0, 0, 0, 0.4029, 0, 0.0544702, 0)
 material_override = SubResource("ShaderMaterial_t4rhq")
-texture = ExtResource("2_qp8uv")
+texture_filter = 0
+texture = ExtResource("9_csblv")
 
 [node name="GunPivot" type="Marker3D" parent="SubViewportContainer/SubViewport/Player" node_paths=PackedStringArray("ammo_control")]
 script = ExtResource("3_1esg4")
@@ -248,6 +281,13 @@ scaleTexture = false
 [node name="Footsteps" type="AudioStreamPlayer3D" parent="SubViewportContainer/SubViewport/Player"]
 volume_db = -20.506
 bus = &"World FX"
+
+[node name="Hurt" type="AudioStreamPlayer3D" parent="SubViewportContainer/SubViewport/Player"]
+stream = ExtResource("12_coyaq")
+attenuation_model = 3
+volume_db = -18.263
+bus = &"World FX"
+attenuation_filter_cutoff_hz = 20500.0
 
 [node name="CameraPivot" type="Marker3D" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("5_d5h5m")
@@ -277,7 +317,7 @@ transform = Transform3D(0.391521, 0, 0, 0, 0.391521, 0, 0, 0, 0.391521, 0, -0.76
 environment = SubResource("Environment_ac3fk")
 
 [node name="SceneGenerator" type="Marker3D" parent="SubViewportContainer/SubViewport"]
-script = ExtResource("9_8vig0")
+script = ExtResource("15_48dtg")
 
 [node name="Crosshair" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.752941)
@@ -288,6 +328,33 @@ texture = ExtResource("9_ca1w7")
 script = ExtResource("10_0djgi")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Tutorial" type="ReferenceRect" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 29.0
+offset_top = -174.0
+offset_right = 364.0
+offset_bottom = -14.0
+grow_vertical = 0
+theme = ExtResource("13_jhl6l")
+script = SubResource("GDScript_1dqei")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Tutorial"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+bbcode_enabled = true
+text = "WASD to move
+LEFT CLICK to shoot
+ESC to open pause menu
+R to reload
+SPACE to dash"
 
 [node name="Player Tracker" type="Marker2D" parent="CanvasLayer"]
 position = Vector2(576, 333)
@@ -325,34 +392,39 @@ grow_horizontal = 0
 grow_vertical = 0
 
 [node name="Health" type="ReferenceRect" parent="CanvasLayer/Player Tracker"]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -155.0
+offset_top = 21.0
+offset_right = 32.0
+offset_bottom = 76.0
+script = ExtResource("21_a1o7e")
 
 [node name="Health Label" type="RichTextLabel" parent="CanvasLayer/Player Tracker/Health"]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = -20.0
-offset_top = 28.0
-offset_right = 54.0
-offset_bottom = 64.0
+offset_left = 3.0
+offset_top = 13.0
+offset_right = -60.0
+offset_bottom = 46.0
 grow_horizontal = 2
 theme = ExtResource("13_jhl6l")
+theme_override_colors/default_color = Color(1, 0.776471, 0.807843, 1)
+theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
-text = "[right]AMMO[/right]"
+text = "[right]10/10 HP[/right]"
 
 [node name="Upgrades" type="ReferenceRect" parent="CanvasLayer"]
 offset_right = 1014.0
 offset_bottom = 101.0
 
 [node name="Pause Screen" type="ReferenceRect" parent="CanvasLayer"]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("13_jhl6l")
 script = SubResource("GDScript_4cj0f")
 
 [node name="Fade in" type="ColorRect" parent="CanvasLayer/Pause Screen"]
@@ -374,17 +446,17 @@ anchors_preset = 9
 anchor_bottom = 1.0
 offset_left = -693.0
 offset_right = 52.0
-offset_bottom = 12312.0
+offset_bottom = 17496.0
 grow_vertical = 2
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer/Pause Screen/Pause UI"]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
-offset_left = -34.0
-offset_top = -281.0
-offset_right = 456.0
-offset_bottom = 10.0
+offset_left = -12.0
+offset_top = -273.0
+offset_right = 455.0
+offset_bottom = -15360.0
 grow_vertical = 2
 rotation = 0.361697
 mouse_filter = 2
@@ -421,6 +493,25 @@ offset_bottom = 439.0
 theme = ExtResource("13_jhl6l")
 text = "BACK TO
 MAIN MENU"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="CanvasLayer/Pause Screen/Pause UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 89.0
+offset_top = 491.0
+offset_right = -351.0
+offset_bottom = -15451.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "WASD to move
+LEFT CLICK to shoot
+ESC to open pause menu
+R to reload
+SPACE to dash"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Pause Screen"]
 root_node = NodePath("../..")

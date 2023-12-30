@@ -25,6 +25,7 @@ muzzle_light = NodePath("Pivot/Muzzle Flash/Muzzle Light")
 RECOIL = 0.3
 RECOIL_ROTATION = 0.5
 MUZZLE_FLASH_SPRITES = Array[Texture2D]([ExtResource("3_1yjel"), ExtResource("3_xpdme"), ExtResource("4_dgh2r"), ExtResource("5_q3uex"), ExtResource("6_4lrhi")])
+BULLET_DAMAGE = 2.0
 BULLET_MAX_DISTANCE = 30.0
 enemy_mask = 4
 wall_mask = 1

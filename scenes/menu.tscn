@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://hs28hdw5frkv"]
+[gd_scene load_steps=5 format=3 uid="uid://hs28hdw5frkv"]
 
+[ext_resource type="Texture2D" uid="uid://dfrig0s8veerv" path="res://textures/bg.png" id="1_gr4gt"]
 [ext_resource type="Theme" uid="uid://d17vfkp5d2dhf" path="res://assets/theme/theme.tres" id="1_hfmc3"]
 
 [sub_resource type="GDScript" id="GDScript_6773g"]
@@ -29,7 +30,6 @@ var funny_splash_texts = [
 	\"\\\"just add some rocket launchers and other christmas paraphernalia and it'll be great\\\"\",
 	\"justin: \\\"don't stress too much over it\\\" colin: \\\"i'm stressing over it\\\"\",
 	\"\\\"we need to finish the game today\\\" colin, still fast asleep:\",
-	\"\\\"i have as many creativity as i have women\\\" - justin 2023\",
 	
 	\"\\\"WHY IS THIS NOT WORKING\\\" \\\"oh nvm found it\\\"\",
 	\"made by 4 girls\",
@@ -54,6 +54,15 @@ func _process(delta):
 script = SubResource("GDScript_6773g")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_gr4gt")
 
 [node name="Splash Text" type="RichTextLabel" parent="CanvasLayer"]
 anchors_preset = 1
@@ -97,6 +106,7 @@ theme_override_font_sizes/font_size = 46
 text = "Quit Game"
 
 [node name="Options" type="Button" parent="CanvasLayer/ReferenceRect"]
+layout_mode = 0
 offset_left = 391.0
 offset_top = 89.0
 offset_right = 667.0
@@ -114,6 +124,37 @@ offset_bottom = 108.0
 theme = ExtResource("1_hfmc3")
 theme_override_font_sizes/font_size = 46
 text = "Start Game"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -590.0
+offset_top = 53.0
+offset_right = 590.0
+offset_bottom = 261.0
+grow_horizontal = 2
+theme = ExtResource("1_hfmc3")
+theme_override_font_sizes/normal_font_size = 94
+bbcode_enabled = true
+text = "[center]PAST, PRESENTS, FUTURE![/center]
+"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/RichTextLabel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -502.0
+offset_top = 94.0
+offset_right = 309.0
+offset_bottom = 187.0
+grow_horizontal = 2
+theme = ExtResource("1_hfmc3")
+theme_override_colors/default_color = Color(1, 1, 1, 0.866667)
+theme_override_font_sizes/normal_font_size = 39
+bbcode_enabled = true
+text = "an unfinished dumpster fire"
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 

@@ -33,6 +33,8 @@ class_name Gun
 @export var BULLET_MAX_DISTANCE = 10.0
 @export var BULLET_PENETRATION: int = 1
 
+@export var DAMAGE_OVER_TIME = 0.0
+
 @onready var fire_audio = $"Shoot"
 @onready var reload_audio = $"Reload"
 @onready var bullet_casing = $"Pivot/Sprite/Bullet Casing"
@@ -109,6 +111,7 @@ func shoot_bullet():
 	for collider in collided:
 		if collider is Enemy:
 			collider.damage(BULLET_DAMAGE)
+			collider.add_dot(DAMAGE_OVER_TIME)
 	
 	if (last_hit - player.position).length_squared() < (muzzle_position - player.position).length_squared():
 		return

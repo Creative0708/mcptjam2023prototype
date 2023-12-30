@@ -1,0 +1,24 @@
+GUN UPGRADES
+Special Rounds [Icon 1, 2] 		- Exclusive To: [Pistol, Rifle] 		- Extra gunpowder grants [+15% Bullet Speed] and [+10% Bullet Damage] at the cost of [+10% Bullet Spread]
+Cut Shells [Icon 3] 			- Exclusive To: [Shotgun] 			- Cut shells grant [-20% Pellet Spread], [-30% Pellet Count] and [+10% Pellet Damage]
+Mercury Tipped Rounds [Icon 4] 		- Exclusive To: [Pistol, Rifle] 		- Mercury tipped rounds grant [-10% Bullet Damage] and [+5 Damage Over Time]
+AI Rounds [Icon 5] 			- Exclusive to: [None] 				- Embedded tracking devices cause bullets to home to enemies
+Explosive Rounds [Icon 6] 		- Exclusive To: [None] 				- Explosives in bullet tip grant [+10% Bullet Damage] and bullets explode on impact, damaging nearby enemies for 20% of your bullet damage
+Electrified Rounds [Icon 7] 		- Exclusive To: [None] 				- Built-in capacitors grant [+5% Bullet Damage] and has a chance to shock enemies, stunning them
+Slide Cuts [Icon 8]			- Exclusive To: [Pistol] 			- Weight-reducing slide cuts grant [+15% Fire Rate]
+Lightened Bolt [Icon 9] 		- Exclusive To: [Rifle]				- Modified lightweight bolt grants [+15% Fire Rate]
+Hardened Barrel [Icon 10] 		- Exclusive to: [Pistol, Rifle] 		- A hardened barrel grants [-15% Bullet Spread]
+Long Barrel [Icon 11] 			- Exclusive to: [Pistol, Rifle, Shotgun] 	- A lengthened barrel grants [+10% Bullet Speed] and [+5% Bullet Damage]
+Extended Magazine [Icon 12] 		- Exclusive to: [Pistol, Rifle] 		- A custom extended magazine grants [+50% Magazine Capacity]
+Sniper Scope [Icon 13] 			- Exclusive to: [None] 				- A sniper scope grants [+50% Vision Range] and [-50% Bullet Spread]
+
+CHARACTER UPGRADES
+Squire's Shield [Icon 14] 		- Grants a 5% chance to deflect projectiles away from the player
+Knight's Shield [Icon 15]		- Grants an additional 5% chance to deflect projectiles, dealing damage
+Stonks [Icon 16]			- Increase money gained from enemies and chests by 10%
+Star Anise Pod [Icon 17] 		- The odor from this spice awakens more enemies, increasing enemy spawns by 10%
+Hermes' Boots [Icon 18] 		- These special boots increase movement speed by 10%
+Extra Heart [Icon 19]			- Grants 1 extra permanent heart if at full HP. Heals 1 HP otherwise.
+Shield Heart [Icon 20]  		- Grants 1 temporary heart that is lost when hit. Prioritized over regular hearts when taking damage.
+Viking Helmet [Icon 21] 		- Dashing into enemies damages them for 75% of your base damage.
+Night Vision Goggles [Icon 22] 		- Allows you to see your entire screen, increases minimap view area

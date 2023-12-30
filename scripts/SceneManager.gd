@@ -5,6 +5,7 @@ const SCENES = {
 	"intro": preload("res://scenes/game_intro.tscn"),
 	"game": preload("res://scenes/game.tscn"),
 	"options": preload("res://scenes/options.tscn"),
+	"death": preload("res://scenes/death.tscn")
 }
 
 const MUSIC = {
@@ -21,8 +22,8 @@ const MUSIC = {
 
 @onready var scene_node = $"Current Scene"
 
-func instantiate(scene):
-	var node = scene.instantiate(PackedScene.GEN_EDIT_STATE_DISABLED)
+func instantiate(scene: PackedScene):
+	var node = scene.instantiate()
 	scene_node.add_child(node)
 	return node
 
@@ -60,6 +61,9 @@ func _ready():
 				next_scene = await scene.scene_change
 			"options":
 				await scene.go_back
+				next_scene = "menu"
+			"death":
+				await scene.okay
 				next_scene = "menu"
 
 var current_music_id: String

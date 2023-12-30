@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://c58iu1w5wga0y"]
+[gd_scene load_steps=8 format=3 uid="uid://c58iu1w5wga0y"]
 
+[ext_resource type="Texture2D" uid="uid://dfrig0s8veerv" path="res://textures/bg.png" id="1_3a30b"]
 [ext_resource type="Theme" uid="uid://d17vfkp5d2dhf" path="res://assets/theme/theme.tres" id="1_xx2ny"]
 [ext_resource type="Texture2D" uid="uid://dsicnmx4r7dgg" path="res://textures/gumdrop_pistol/gumdrop_pistol2.png" id="2_4pofw"]
 [ext_resource type="Script" path="res://scenes/Tooltip.gd" id="3_dkwvj"]
@@ -30,6 +31,15 @@ script = SubResource("GDScript_vac6a")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_3a30b")
+
 [node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer"]
 anchors_preset = 5
 anchor_left = 0.5
@@ -59,9 +69,9 @@ grow_vertical = 2
 
 [node name="Button" type="Button" parent="CanvasLayer/ReferenceRect"]
 layout_mode = 0
-offset_left = 45.0
+offset_left = 86.0
 offset_top = 59.0
-offset_right = 242.0
+offset_right = 283.0
 offset_bottom = 211.0
 scale = Vector2(0.825019, 0.825019)
 theme = ExtResource("1_xx2ny")
@@ -70,13 +80,14 @@ icon_alignment = 1
 script = ExtResource("3_dkwvj")
 tooltip = "[font_size=50]GUMDROP PISTOL[/font_size]
 A versatile weapon.
-+1 Upgrade slot to every shop you visit"
++1 Upgrade slot to every shop you visit
+(shops don't exist bc we couldn't implement them in time)"
 
 [node name="Button2" type="Button" parent="CanvasLayer/ReferenceRect"]
 layout_mode = 0
-offset_left = 256.0
+offset_left = 359.0
 offset_top = 57.0
-offset_right = 626.0
+offset_right = 729.0
 offset_bottom = 324.0
 scale = Vector2(0.437526, 0.468887)
 theme = ExtResource("1_xx2ny")
@@ -88,9 +99,9 @@ A well-rounded weapon, with a high fire rate and moderate damage."
 
 [node name="Button3" type="Button" parent="CanvasLayer/ReferenceRect"]
 layout_mode = 0
-offset_left = 464.0
+offset_left = 632.0
 offset_top = 57.0
-offset_right = 723.0
+offset_right = 891.0
 offset_bottom = 264.0
 scale = Vector2(0.608948, 0.608948)
 theme = ExtResource("1_xx2ny")
@@ -100,17 +111,6 @@ script = ExtResource("3_dkwvj")
 tooltip = "[font_size=50]PEPPERMINT SHOTGUN[/font_size]
 A very close-range weapon, but deadly when used in the right way.
 Fires a lot of bullets at once, but has a slow reload speed."
-
-[node name="Button4" type="Button" parent="CanvasLayer/ReferenceRect"]
-layout_mode = 0
-offset_left = 673.0
-offset_top = 58.0
-offset_right = 870.0
-offset_bottom = 210.0
-scale = Vector2(0.825019, 0.825019)
-theme = ExtResource("1_xx2ny")
-icon_alignment = 1
-script = ExtResource("3_dkwvj")
 
 [node name="Marker2D" type="Marker2D" parent="CanvasLayer"]
 position = Vector2(380, 471)
@@ -128,4 +128,3 @@ bbcode_enabled = true
 [connection signal="pressed" from="CanvasLayer/ReferenceRect/Button" to="." method="_on_button_pressed" binds= [0]]
 [connection signal="pressed" from="CanvasLayer/ReferenceRect/Button2" to="." method="_on_button_pressed" binds= [1]]
 [connection signal="pressed" from="CanvasLayer/ReferenceRect/Button3" to="." method="_on_button_pressed" binds= [2]]
-[connection signal="pressed" from="CanvasLayer/ReferenceRect/Button4" to="." method="_on_button_pressed" binds= [3]]

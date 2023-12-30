@@ -10,10 +10,12 @@ config_version=5
 
 [application]
 
-config/name="mcptjam2023prototype"
+config/name="Past, Presents! Future"
+config/description="was supposed to be a game for the mcpt 2023 winter jam but ended up a dumpster fire instead"
 run/main_scene="res://scenes/scene_manager.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://icon.png"
+config/windows_native_icon="res://icon.ico"
 
 [display]
 

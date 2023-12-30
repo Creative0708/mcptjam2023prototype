@@ -3,6 +3,7 @@ extends Node3D
 class_name Bullet
 
 @export_flags_3d_physics var wall_flag: int
+@export_flags_3d_physics var player_flag: int
 
 var velocity: Vector3 = Vector3.ZERO
 
@@ -50,8 +51,10 @@ func _process(delta):
 		die()
 
 func _on_area_body_entered(body):
-	if body is StaticBody3D and (body.collision_layer & wall_flag):
-		die()
+	#if body is StaticBody3D and (body.collision_layer & wall_flag):
+		#die()
+	if body is Player:
+		body.try_damage(self)
 
 func die():
 	if is_dying:

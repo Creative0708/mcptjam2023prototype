@@ -53,13 +53,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.29601, 2.70713, -4.85133)
 [node name="Torch2" parent="." index="18" instance=ExtResource("4_47iia")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.24351, 2.70713, -4.85133)
 
-[node name="Torch4" parent="." index="19" instance=ExtResource("4_47iia")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.9942, 0.47471, 0.247776)
-
-[node name="Torch5" parent="." index="20" instance=ExtResource("4_47iia")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9433, 0.47471, 0.247776)
-
-[node name="Right" type="StaticBody3D" parent="." index="21"]
+[node name="Right" type="StaticBody3D" parent="." index="19"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.013, 0, 1.28471)
 collision_layer = 3
 
@@ -72,7 +66,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.788078, 2.61166, -0.889252
 material_override = SubResource("StandardMaterial3D_tex6i")
 size = Vector3(2.6427, 6.22333, 7.28607)
 
-[node name="Bottom" type="StaticBody3D" parent="." index="22"]
+[node name="Bottom" type="StaticBody3D" parent="." index="20"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00401902, 0.859015, 16.0482)
 collision_layer = 3
 
@@ -85,7 +79,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.063, 2.013, 6.335)
 material_override = SubResource("StandardMaterial3D_tex6i")
 size = Vector3(7, 6.22333, 5)
 
-[node name="Left" type="StaticBody3D" parent="." index="23"]
+[node name="Left" type="StaticBody3D" parent="." index="21"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.013, 0, 1.34196)
 collision_layer = 3
 

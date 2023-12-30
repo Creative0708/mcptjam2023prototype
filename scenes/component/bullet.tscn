@@ -8,8 +8,10 @@
 [node name="Bullet" type="Node3D"]
 script = ExtResource("1_wvs5s")
 wall_flag = 1
+player_flag = 8
 
 [node name="Area" type="Area3D" parent="."]
+collision_mask = 9
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area"]
 shape = SubResource("SphereShape3D_l5r8q")

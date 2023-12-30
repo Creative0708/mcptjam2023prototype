@@ -28,7 +28,7 @@ var viewport_mouse_pos = Vector2.ZERO
 @onready var game = $"../../../.."
 
 func set_gun(gun_scene: PackedScene):
-	gun = gun_scene.instantiate(PackedScene.GEN_EDIT_STATE_DISABLED)
+	gun = gun_scene.instantiate()
 	add_child(gun)
 	init_gun_stuffs()
 

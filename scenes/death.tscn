@@ -1,0 +1,65 @@
+[gd_scene load_steps=4 format=3 uid="uid://d2esws3rf6e4k"]
+
+[ext_resource type="Script" path="res://scripts/DeathScreen.gd" id="1_b7nvp"]
+[ext_resource type="Theme" uid="uid://d17vfkp5d2dhf" path="res://assets/theme/theme.tres" id="1_rtajr"]
+[ext_resource type="Texture2D" uid="uid://dfrig0s8veerv" path="res://textures/bg.png" id="2_ymvdk"]
+
+[node name="Death" type="CanvasLayer"]
+script = ExtResource("1_b7nvp")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_ymvdk")
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -296.0
+offset_top = 228.0
+offset_right = 296.0
+offset_bottom = 556.0
+grow_horizontal = 2
+theme = ExtResource("1_rtajr")
+theme_override_font_sizes/normal_font_size = 46
+bbcode_enabled = true
+text = "[center]this game is half finished and i need sleep[/center]
+"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -597.0
+offset_top = 53.0
+offset_right = 597.0
+offset_bottom = 179.0
+grow_horizontal = 2
+theme = ExtResource("1_rtajr")
+theme_override_font_sizes/normal_font_size = 101
+bbcode_enabled = true
+text = "[center]YOU DIED[/center]
+"
+
+[node name="Okay Button" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -138.0
+offset_top = 114.0
+offset_right = 138.0
+offset_bottom = 183.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_rtajr")
+theme_override_font_sizes/font_size = 46
+text = "Okay"
+
+[connection signal="pressed" from="Okay Button" to="." method="_on_ok_button_pressed"]

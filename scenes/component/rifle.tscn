@@ -27,6 +27,7 @@ RECOIL = 0.2
 RECOIL_ROTATION = 0.1
 MUZZLE_FLASH_SPRITES = Array[Texture2D]([ExtResource("3_7qpuv"), ExtResource("3_tcxtm"), ExtResource("4_5ike5"), ExtResource("5_qyh4q"), ExtResource("6_xgiov")])
 MAGAZINE_CAPACITY = 30
+BULLET_DAMAGE = 1.5
 BULLET_SPREAD_DISTANCE = 0.02
 enemy_mask = 4
 wall_mask = 1
