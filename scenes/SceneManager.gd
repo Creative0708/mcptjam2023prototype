@@ -3,7 +3,8 @@ extends Node2D
 const SCENES = {
 	"menu": preload("res://scenes/menu.tscn"),
 	"intro": preload("res://scenes/game_intro.tscn"),
-	"game": preload("res://scenes/game.tscn")
+	"game": preload("res://scenes/game.tscn"),
+	"options": preload("res://scenes/options.tscn"),
 }
 
 const MUSIC = {
@@ -41,8 +42,7 @@ func _ready():
 		match next_scene:
 			"menu":
 				play_music("menu")
-				await scene.start_game
-				next_scene = "intro"
+				next_scene = await scene.scene_change
 			"intro":
 				var chosen_type = await scene.weapon_chosen
 				match chosen_type:
@@ -58,6 +58,9 @@ func _ready():
 				scene.set_gun(loaded_gun)
 				# scene.audio_change.connect()
 				next_scene = await scene.scene_change
+			"options":
+				await scene.go_back
+				next_scene = "menu"
 
 var current_music_id: String
 

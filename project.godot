@@ -70,7 +70,7 @@ paused={
 
 [layer_names]
 
-3d_physics/layer_2="Wall"
+3d_physics/layer_1="Wall"
 3d_physics/layer_3="Enemy"
 3d_physics/layer_4="Player"
 

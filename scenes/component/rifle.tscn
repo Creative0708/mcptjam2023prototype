@@ -29,7 +29,7 @@ MUZZLE_FLASH_SPRITES = Array[Texture2D]([ExtResource("3_7qpuv"), ExtResource("3_
 MAGAZINE_CAPACITY = 30
 BULLET_SPREAD_DISTANCE = 0.02
 enemy_mask = 4
-wall_mask = 2
+wall_mask = 1
 
 [node name="Pivot" type="Marker3D" parent="."]
 

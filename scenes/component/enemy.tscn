@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://b80go6330mkjr"]
 
-[ext_resource type="Script" path="res://scenes/component/Enemy.gd" id="1_4b3od"]
+[ext_resource type="Script" path="res://scripts/Enemy.gd" id="1_vrdmv"]
 [ext_resource type="Texture2D" uid="uid://ble7471fjllfq" path="res://textures/enemy/standard_enemy/pixil-frame-0.png" id="2_obpp7"]
 [ext_resource type="Texture2D" uid="uid://c64vf1h0cypdf" path="res://textures/enemy/standard_enemy/pixil-frame-1.png" id="3_ch8kv"]
 [ext_resource type="Texture2D" uid="uid://cg1jd4hlm6agr" path="res://textures/enemy/standard_enemy/pixil-frame-2.png" id="4_wmcm7"]
@@ -27,15 +27,18 @@ animations = [{
 }]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_7cbca"]
+radius = 0.4
 
 [node name="Enemy" type="CharacterBody3D"]
-script = ExtResource("1_4b3od")
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_vrdmv")
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(0.404156, 0, 0, 0, 0.404156, 0, 0, 0, 0.404156, 0, 0, 0)
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_mxwva")
-frame_progress = 0.650041
+frame_progress = 0.934856
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.843636, 0, 0, 0, 0.843636, 0, 0, 0, 0.843636, 0, 0, 0)

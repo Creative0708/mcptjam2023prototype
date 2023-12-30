@@ -106,6 +106,10 @@ func shoot_bullet():
 	muzzle_position.z -= muzzle_position.y
 	muzzle_position.y = 0
 	
+	for collider in collided:
+		if collider is Enemy:
+			collider.damage(BULLET_DAMAGE)
+	
 	if (last_hit - player.position).length_squared() < (muzzle_position - player.position).length_squared():
 		return
 	

@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://dfs8ogeisvjqr"]
+
+[ext_resource type="Script" path="res://scripts/Bullet.gd" id="1_wvs5s"]
+[ext_resource type="Texture2D" uid="uid://3w3eeaxorkoq" path="res://textures/enemy/enemy_bullet/bullet_small.png" id="2_hfthm"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_l5r8q"]
+
+[node name="Bullet" type="Node3D"]
+script = ExtResource("1_wvs5s")
+wall_flag = 1
+
+[node name="Area" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area"]
+shape = SubResource("SphereShape3D_l5r8q")
+
+[node name="Sprite" type="Sprite3D" parent="."]
+transform = Transform3D(1.48474, 0, 0, 0, 1.48474, 0, 0, 0, 1.48474, 0, 0, 0)
+texture_filter = 0
+render_priority = 123
+texture = ExtResource("2_hfthm")
+
+[connection signal="body_entered" from="Area" to="." method="_on_area_body_entered"]

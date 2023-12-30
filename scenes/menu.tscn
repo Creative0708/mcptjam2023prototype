@@ -5,13 +5,16 @@
 [sub_resource type="GDScript" id="GDScript_6773g"]
 script/source = "extends Node2D
 
-signal start_game
+signal scene_change(String)
 
 func _on_quit_game():
 	get_tree().quit()
 
 func _on_start_game():
-	start_game.emit()
+	scene_change.emit(\"intro\")
+
+func _on_options():
+	scene_change.emit(\"options\")
 "
 
 [sub_resource type="GDScript" id="GDScript_2yk8o"]
@@ -35,7 +38,7 @@ var funny_splash_texts = [
 	\"sudo rm -rf /*\",
 	\"meow\",
 	\"cost of development: justin's sleep schedule\",
-	\"a computer is like a spaceship; it becomes useless when you open windows\"
+	\"a computer is like a spaceship; it becomes useless once you open windows\"
 ]
 
 func _ready():
@@ -52,32 +55,18 @@ script = SubResource("GDScript_6773g")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -597.0
-offset_top = 53.0
-offset_right = 597.0
-offset_bottom = 550.0
-grow_horizontal = 2
-theme = ExtResource("1_hfmc3")
-theme_override_font_sizes/normal_font_size = 101
-bbcode_enabled = true
-text = "[center]GAME TITLE HERE[/center]"
-
-[node name="Splash Text" type="RichTextLabel" parent="CanvasLayer/RichTextLabel"]
-layout_mode = 1
+[node name="Splash Text" type="RichTextLabel" parent="CanvasLayer"]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -544.0
-offset_top = 99.0
-offset_right = -44.0
-offset_bottom = 424.0
+offset_left = -501.0
+offset_top = 156.0
+offset_right = -1.00012
+offset_bottom = 481.0
 grow_horizontal = 0
 rotation = -0.0666077
 pivot_offset = Vector2(250, 20)
+theme = ExtResource("1_hfmc3")
 theme_override_colors/default_color = Color(1, 1, 0, 1)
 theme_override_font_sizes/normal_font_size = 36
 bbcode_enabled = true
@@ -107,6 +96,15 @@ theme = ExtResource("1_hfmc3")
 theme_override_font_sizes/font_size = 46
 text = "Quit Game"
 
+[node name="Options" type="Button" parent="CanvasLayer/ReferenceRect"]
+offset_left = 391.0
+offset_top = 89.0
+offset_right = 667.0
+offset_bottom = 158.0
+theme = ExtResource("1_hfmc3")
+theme_override_font_sizes/font_size = 46
+text = "Options"
+
 [node name="Start Game" type="Button" parent="CanvasLayer/ReferenceRect"]
 layout_mode = 0
 offset_left = 54.0
@@ -120,4 +118,5 @@ text = "Start Game"
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 
 [connection signal="pressed" from="CanvasLayer/ReferenceRect/Die" to="." method="_on_quit_game"]
+[connection signal="pressed" from="CanvasLayer/ReferenceRect/Options" to="." method="_on_options"]
 [connection signal="pressed" from="CanvasLayer/ReferenceRect/Start Game" to="." method="_on_start_game"]

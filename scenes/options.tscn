@@ -1,53 +1,45 @@
-[gd_scene load_steps=4 format=3 uid="uid://dtxg4tsees2kk"]
+[gd_scene load_steps=3 format=3 uid="uid://dtxg4tsees2kk"]
 
 [ext_resource type="Theme" uid="uid://d17vfkp5d2dhf" path="res://assets/theme/theme.tres" id="1_vpmfq"]
 
 [sub_resource type="GDScript" id="GDScript_6773g"]
 script/source = "extends Node2D
 
-signal start_game
+signal go_back
 
-func _on_quit_game():
-	get_tree().quit()
+var previous_sfx_val
+var previous_music_val
 
-func _on_start_game():
-	start_game.emit()
-"
-
-[sub_resource type="GDScript" id="GDScript_2yk8o"]
-script/source = "extends RichTextLabel
-
-var funny_splash_texts = [
-	\"\\\"what is sleep, is that like a programming language\\\"\",
-	\"WriteScanner reader = old ScanWriter(printer System(\\\"out.ReadWriter\\\"));\",
-	\"\\\"[...] i mean, if brian is too busy or phil gets too distracted by anime girls [...]\\\"\",
-	\"\\\"self-care? is that doublespeak for weakness\\\" - colin 2023\",
-	\"\\\"i just woke up\\\" IT'S AFTER NOON\",
-	\"\\\"just add some rocket launchers and other christmas paraphernalia and it'll be great\\\"\",
-	\"justin: \\\"don't stress too much over it\\\" colin: \\\"i'm stressing over it\\\"\",
-	\"\\\"we need to finish the game today\\\" colin, still fast asleep:\",
-	\"\\\"i have as many creativity as i have women\\\" - justin 2023\",
-	
-	\"\\\"WHY IS THIS NOT WORKING\\\" \\\"oh nvm found it\\\"\",
-	\"made by 4 girls\",
-	\"sleep? oh like Thread.sleep() in java\",
-	\"Made in Ready to Program!\",
-	\"sudo rm -rf /*\",
-	\"meow\",
-	\"cost of development: justin's sleep schedule\",
-	\"a computer is like a spaceship; it becomes useless when you open windows\"
-]
+@onready var sfx_slider = $CanvasLayer/Options/HSlider
+@onready var music_slider = $CanvasLayer/Options/HSlider2
 
 func _ready():
-	text = \"[center]%s[/center]\" % funny_splash_texts[randi() % len(funny_splash_texts)]
+	previous_sfx_val = sfx_slider.value
+	previous_music_val = music_slider.value
+	
+	sfx_slider.value_changed.connect(_on_sfx_value_changed)
+	music_slider.value_changed.connect(_on_music_value_changed)
 
-var time_passed = 0
-func _process(delta):
-	time_passed += delta
-	scale = Vector2.ONE * (1 - sin(time_passed * 9) * 0.05)
+func _on_go_back():
+	go_back.emit()
+
+func _on_sfx_value_changed(value):
+	var sfx = AudioServer.get_bus_index(\"SFX\")
+	var previous_volume = AudioServer.get_bus_volume_db(sfx)
+	AudioServer.set_bus_volume_db(sfx, previous_volume + (value - previous_sfx_val) * 0.3)
+	previous_sfx_val = value
+	AudioServer.set_bus_mute(sfx, value == 0)
+	
+func _on_music_value_changed(value):
+	var music = AudioServer.get_bus_index(\"Music\")
+	var previous_volume = AudioServer.get_bus_volume_db(music)
+	AudioServer.set_bus_volume_db(music, previous_volume + (value - previous_music_val) * 0.3)
+	previous_music_val = value
+	AudioServer.set_bus_mute(music, value == 0)
+	
 "
 
-[node name="Menu" type="Node2D"]
+[node name="Options" type="Node2D"]
 script = SubResource("GDScript_6773g")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -59,39 +51,76 @@ anchor_right = 0.5
 offset_left = -597.0
 offset_top = 53.0
 offset_right = 597.0
-offset_bottom = 550.0
+offset_bottom = 179.0
 grow_horizontal = 2
 theme = ExtResource("1_vpmfq")
 theme_override_font_sizes/normal_font_size = 101
 bbcode_enabled = true
-text = "[center]GAME TITLE HERE[/center]"
+text = "[center]OPTIONS[/center]
+"
 
-[node name="Splash Text" type="RichTextLabel" parent="CanvasLayer/RichTextLabel"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -544.0
-offset_top = 99.0
-offset_right = -44.0
-offset_bottom = 424.0
-grow_horizontal = 0
-rotation = -0.0666077
-pivot_offset = Vector2(250, 20)
-theme_override_colors/default_color = Color(1, 1, 0, 1)
-theme_override_font_sizes/normal_font_size = 36
-bbcode_enabled = true
-text = "[center]FUNNY SPLASH TEXT HERE[/center]"
-script = SubResource("GDScript_2yk8o")
+[node name="Options" type="ReferenceRect" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -376.0
+offset_top = -139.0
+offset_right = 389.0
+offset_bottom = 190.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_vpmfq")
 
-[node name="Back" type="Button" parent="CanvasLayer"]
-offset_left = 70.0
-offset_top = 526.0
-offset_right = 346.0
-offset_bottom = 595.0
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Options"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 85.0
+offset_right = 351.0
+offset_bottom = 158.0
+theme_override_font_sizes/normal_font_size = 51
+text = "SFX Volume"
+
+[node name="HSlider" type="HSlider" parent="CanvasLayer/Options"]
+layout_mode = 0
+offset_left = 405.0
+offset_top = 49.0
+offset_right = 555.0
+offset_bottom = 128.0
+scale = Vector2(1.78654, 1.78654)
+value = 50.0
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="CanvasLayer/Options"]
+offset_left = 41.0
+offset_top = 194.0
+offset_right = 348.0
+offset_bottom = 267.0
+theme_override_font_sizes/normal_font_size = 51
+text = "Music Volume"
+
+[node name="HSlider2" type="HSlider" parent="CanvasLayer/Options"]
+offset_left = 405.0
+offset_top = 152.0
+offset_right = 555.0
+offset_bottom = 231.0
+scale = Vector2(1.78654, 1.78654)
+value = 50.0
+
+[node name="Back Button" type="Button" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 35.0
+offset_top = -100.0
+offset_right = 311.0
+offset_bottom = -31.0
+grow_vertical = 0
 theme = ExtResource("1_vpmfq")
 theme_override_font_sizes/font_size = 46
 text = "Back
 "
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+
+[connection signal="pressed" from="CanvasLayer/Back Button" to="." method="_on_go_back"]

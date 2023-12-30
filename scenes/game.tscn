@@ -1,6 +1,7 @@
-[gd_scene load_steps=32 format=3 uid="uid://dmhvqwkqf388"]
+[gd_scene load_steps=33 format=3 uid="uid://dmhvqwkqf388"]
 
 [ext_resource type="Script" path="res://scripts/ViewportResize.gd" id="2_cmdgg"]
+[ext_resource type="PackedScene" uid="uid://b80go6330mkjr" path="res://scenes/component/enemy.tscn" id="2_dkr2t"]
 [ext_resource type="Script" path="res://scripts/Player.gd" id="2_j5b4q"]
 [ext_resource type="Texture2D" uid="uid://disxf14wupqph" path="res://icon.svg" id="2_qp8uv"]
 [ext_resource type="Script" path="res://scripts/GunHandler.gd" id="3_1esg4"]
@@ -83,6 +84,9 @@ script/source = "extends ReferenceRect
 @onready var color_rect = $\"Pause UI/ColorRect\"
 
 @onready var game = $\"../..\"
+
+func _ready():
+	show()
 
 func update_paused(paused):
 	if paused:
@@ -201,7 +205,11 @@ size = Vector2i(1152, 648)
 size_2d_override_stretch = true
 render_target_update_mode = 4
 
+[node name="Enemy" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_dkr2t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.46511, 0.146002, 0.00165844)
+
 [node name="Player" type="CharacterBody3D" parent="SubViewportContainer/SubViewport"]
+collision_layer = 8
 axis_lock_linear_y = true
 axis_lock_angular_x = true
 axis_lock_angular_y = true
@@ -316,7 +324,30 @@ offset_top = -5.0
 grow_horizontal = 0
 grow_vertical = 0
 
+[node name="Health" type="ReferenceRect" parent="CanvasLayer/Player Tracker"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Health Label" type="RichTextLabel" parent="CanvasLayer/Player Tracker/Health"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = -20.0
+offset_top = 28.0
+offset_right = 54.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme = ExtResource("13_jhl6l")
+bbcode_enabled = true
+text = "[right]AMMO[/right]"
+
+[node name="Upgrades" type="ReferenceRect" parent="CanvasLayer"]
+offset_right = 1014.0
+offset_bottom = 101.0
+
 [node name="Pause Screen" type="ReferenceRect" parent="CanvasLayer"]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -329,6 +360,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -143.0
+offset_top = 29.0
+offset_right = -143.0
+offset_bottom = 29.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0)
@@ -339,7 +374,7 @@ anchors_preset = 9
 anchor_bottom = 1.0
 offset_left = -693.0
 offset_right = 52.0
-offset_bottom = 9072.0
+offset_bottom = 12312.0
 grow_vertical = 2
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer/Pause Screen/Pause UI"]

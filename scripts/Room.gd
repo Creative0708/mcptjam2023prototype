@@ -25,3 +25,6 @@ func get_side(dir: Direction) -> StaticBody3D:
 		Direction.RIGHT:
 			return right
 	return null
+
+func spawn_enemies(num_enemies: int):
+	pass
