@@ -1,0 +1,123 @@
+[gd_scene load_steps=4 format=3 uid="uid://hs28hdw5frkv"]
+
+[ext_resource type="Theme" uid="uid://d17vfkp5d2dhf" path="res://assets/theme/theme.tres" id="1_hfmc3"]
+
+[sub_resource type="GDScript" id="GDScript_6773g"]
+script/source = "extends Node2D
+
+signal start_game
+
+func _on_quit_game():
+	get_tree().quit()
+
+func _on_start_game():
+	start_game.emit()
+"
+
+[sub_resource type="GDScript" id="GDScript_2yk8o"]
+script/source = "extends RichTextLabel
+
+var funny_splash_texts = [
+	\"\\\"what is sleep, is that like a programming language\\\"\",
+	\"WriteScanner reader = old ScanWriter(printer System(\\\"out.ReadWriter\\\"));\",
+	\"\\\"[...] i mean, if brian is too busy or phil gets too distracted by anime girls [...]\\\"\",
+	\"\\\"self-care? is that doublespeak for weakness\\\" - colin 2023\",
+	\"\\\"i just woke up\\\" IT'S AFTER NOON\",
+	\"\\\"just add some rocket launchers and other christmas paraphernalia and it'll be great\\\"\",
+	\"justin: \\\"don't stress too much over it\\\" colin: \\\"i'm stressing over it\\\"\",
+	\"\\\"we need to finish the game today\\\" colin, still fast asleep:\",
+	\"\\\"i have as many creativity as i have women\\\" - justin 2023\",
+	
+	\"\\\"WHY IS THIS NOT WORKING\\\" \\\"oh nvm found it\\\"\",
+	\"made by 4 girls\",
+	\"sleep? oh like Thread.sleep() in java\",
+	\"Made in Ready to Program!\",
+	\"sudo rm -rf /*\",
+	\"meow\",
+	\"cost of development: justin's sleep schedule\",
+	\"a computer is like a spaceship; it becomes useless when you open windows\"
+]
+
+func _ready():
+	text = \"[center]%s[/center]\" % funny_splash_texts[randi() % len(funny_splash_texts)]
+
+var time_passed = 0
+func _process(delta):
+	time_passed += delta
+	scale = Vector2.ONE * (1 - sin(time_passed * 9) * 0.05)
+"
+
+[node name="Menu" type="Node2D"]
+script = SubResource("GDScript_6773g")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -597.0
+offset_top = 53.0
+offset_right = 597.0
+offset_bottom = 550.0
+grow_horizontal = 2
+theme = ExtResource("1_hfmc3")
+theme_override_font_sizes/normal_font_size = 101
+bbcode_enabled = true
+text = "[center]GAME TITLE HERE[/center]"
+
+[node name="Splash Text" type="RichTextLabel" parent="CanvasLayer/RichTextLabel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -544.0
+offset_top = 99.0
+offset_right = -44.0
+offset_bottom = 424.0
+grow_horizontal = 0
+rotation = -0.0666077
+pivot_offset = Vector2(250, 20)
+theme_override_colors/default_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/normal_font_size = 36
+bbcode_enabled = true
+text = "[center]FUNNY SPLASH TEXT HERE[/center]"
+script = SubResource("GDScript_2yk8o")
+
+[node name="ReferenceRect" type="ReferenceRect" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -349.0
+offset_top = -57.0
+offset_right = 349.0
+offset_bottom = 185.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Die" type="Button" parent="CanvasLayer/ReferenceRect"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 132.0
+offset_right = 331.0
+offset_bottom = 201.0
+theme = ExtResource("1_hfmc3")
+theme_override_font_sizes/font_size = 46
+text = "Quit Game"
+
+[node name="Start Game" type="Button" parent="CanvasLayer/ReferenceRect"]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 39.0
+offset_right = 330.0
+offset_bottom = 108.0
+theme = ExtResource("1_hfmc3")
+theme_override_font_sizes/font_size = 46
+text = "Start Game"
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+
+[connection signal="pressed" from="CanvasLayer/ReferenceRect/Die" to="." method="_on_quit_game"]
+[connection signal="pressed" from="CanvasLayer/ReferenceRect/Start Game" to="." method="_on_start_game"]

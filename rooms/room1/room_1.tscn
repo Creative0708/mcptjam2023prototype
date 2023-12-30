@@ -1,0 +1,99 @@
+[gd_scene load_steps=9 format=3 uid="uid://bptre0y38ejxm"]
+
+[ext_resource type="PackedScene" uid="uid://civxfjne3jnvq" path="res://rooms/room1/room1.blend" id="1_xrcwi"]
+[ext_resource type="Script" path="res://scripts/Room.gd" id="2_b2lu8"]
+[ext_resource type="PackedScene" uid="uid://r8mio27wvyq4" path="res://scenes/component/light.tscn" id="2_t5x16"]
+[ext_resource type="PackedScene" uid="uid://7awtdw3sydob" path="res://scenes/component/torch.tscn" id="4_47iia"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xhs1w"]
+size = Vector3(5.74506, 15, 8.17773)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tex6i"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xjcef"]
+size = Vector3(6.7523, 15, 2.97461)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tinug"]
+size = Vector3(6.61963, 15, 7.95117)
+
+[node name="room1" instance=ExtResource("1_xrcwi")]
+script = ExtResource("2_b2lu8")
+
+[node name="Cube" parent="." index="1"]
+collision_layer = 3
+
+[node name="StaticBody3D" parent="Cube-convcol" index="0"]
+collision_layer = 3
+
+[node name="Cube2" parent="." index="8"]
+collision_layer = 3
+
+[node name="Cube3" parent="." index="10"]
+collision_layer = 3
+
+[node name="Light" parent="." index="12" instance=ExtResource("2_t5x16")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.77518, 0.859015, 4.57407)
+
+[node name="Light2" parent="." index="13" instance=ExtResource("2_t5x16")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.13145, 0.859015, 6.10718)
+
+[node name="Light3" parent="." index="14" instance=ExtResource("2_t5x16")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.200509, 0.859015, 7.23146)
+
+[node name="Light4" parent="." index="15" instance=ExtResource("2_t5x16")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.23576, 0.859015, 6.18895)
+
+[node name="Light5" parent="." index="16" instance=ExtResource("2_t5x16")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.9455, 0.859015, 4.75804)
+
+[node name="Torch" parent="." index="17" instance=ExtResource("4_47iia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.29601, 2.70713, -4.85133)
+
+[node name="Torch2" parent="." index="18" instance=ExtResource("4_47iia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.24351, 2.70713, -4.85133)
+
+[node name="Torch4" parent="." index="19" instance=ExtResource("4_47iia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.9942, 0.47471, 0.247776)
+
+[node name="Torch5" parent="." index="20" instance=ExtResource("4_47iia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9433, 0.47471, 0.247776)
+
+[node name="Right" type="StaticBody3D" parent="." index="21"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.013, 0, 1.28471)
+collision_layer = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Right" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.808264, 7, 0.0436156)
+shape = SubResource("BoxShape3D_xhs1w")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Right" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.788078, 2.61166, -0.889252)
+material_override = SubResource("StandardMaterial3D_tex6i")
+size = Vector3(2.6427, 6.22333, 7.28607)
+
+[node name="Bottom" type="StaticBody3D" parent="." index="22"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00401902, 0.859015, 16.0482)
+collision_layer = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bottom" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.296696, 7, -0.73735)
+shape = SubResource("BoxShape3D_xjcef")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Bottom" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.063, 2.013, 6.335)
+material_override = SubResource("StandardMaterial3D_tex6i")
+size = Vector3(7, 6.22333, 5)
+
+[node name="Left" type="StaticBody3D" parent="." index="23"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.013, 0, 1.34196)
+collision_layer = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Left" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.14228, 7, 0)
+shape = SubResource("BoxShape3D_tinug")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Left" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.82135, 2.61166, -0.889252)
+material_override = SubResource("StandardMaterial3D_tex6i")
+size = Vector3(2.6427, 6.22333, 7.28607)

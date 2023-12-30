@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://d36fvkjsc1vk1"]
+
+[ext_resource type="PackedScene" uid="uid://x873m5ek7uh7" path="res://scenes/splash_screen.tscn" id="1_hjhlh"]
+[ext_resource type="Script" path="res://scenes/SceneManager.gd" id="1_x4v82"]
+[ext_resource type="PackedScene" uid="uid://dtg07g8m0n6g6" path="res://scenes/transition.tscn" id="2_brfid"]
+
+[node name="SceneManager" type="Node2D"]
+script = ExtResource("1_x4v82")
+
+[node name="Current Scene" type="Node2D" parent="."]
+
+[node name="SplashScreen" parent="Current Scene" instance=ExtResource("1_hjhlh")]
+
+[node name="Transition" parent="." instance=ExtResource("2_brfid")]
+layer = 128
+
+[node name="Audio" type="AudioStreamPlayer" parent="."]
+volume_db = -18.601
+bus = &"Music"
+
+[connection signal="finished" from="Audio" to="." method="_on_audio_finished"]

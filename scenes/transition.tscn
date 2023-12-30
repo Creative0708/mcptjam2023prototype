@@ -1,0 +1,88 @@
+[gd_scene load_steps=6 format=3 uid="uid://dtg07g8m0n6g6"]
+
+[sub_resource type="GDScript" id="GDScript_j0jxg"]
+script/source = "extends CanvasLayer
+
+signal transition_done
+
+func transition():
+	$AnimationPlayer.play(\"fade_to_black\")
+
+func _on_animation_finished(anim_name):
+	if anim_name == \"fade_to_black\":
+		transition_done.emit()
+		$AnimationPlayer.play(\"fade_to_normal\")
+"
+
+[sub_resource type="Animation" id="Animation_ry068"]
+resource_name = "fade_to_black"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_4fsor"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_fa75k"]
+resource_name = "fade_to_normal"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5e2lf"]
+_data = {
+"RESET": SubResource("Animation_4fsor"),
+"fade_to_black": SubResource("Animation_ry068"),
+"fade_to_normal": SubResource("Animation_fa75k")
+}
+
+[node name="Transition" type="CanvasLayer"]
+script = SubResource("GDScript_j0jxg")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5e2lf")
+}
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_finished"]

@@ -1,0 +1,131 @@
+[gd_scene load_steps=7 format=3 uid="uid://c58iu1w5wga0y"]
+
+[ext_resource type="Theme" uid="uid://d17vfkp5d2dhf" path="res://assets/theme/theme.tres" id="1_xx2ny"]
+[ext_resource type="Texture2D" uid="uid://dsicnmx4r7dgg" path="res://textures/gumdrop_pistol/gumdrop_pistol2.png" id="2_4pofw"]
+[ext_resource type="Script" path="res://scenes/Tooltip.gd" id="3_dkwvj"]
+[ext_resource type="Texture2D" uid="uid://b1dgc4gk4jv8a" path="res://textures/candycorn_rifle/candycorn_rifle2.png" id="3_yety4"]
+[ext_resource type="Texture2D" uid="uid://4iq0hk3q782r" path="res://textures/candycane_shotgun/shotgun.png" id="4_wh8g6"]
+
+[sub_resource type="GDScript" id="GDScript_vac6a"]
+script/source = "extends Node2D
+
+signal weapon_chosen(int)
+
+@onready var tooltip_pos = $CanvasLayer/Marker2D
+@onready var tooltip_label = $CanvasLayer/Marker2D/RichTextLabel
+
+func _process(delta):
+	tooltip_pos.position = get_viewport().get_mouse_position()
+
+func _on_button_pressed(type):
+	assert(type >= 0 && type < 3)
+	weapon_chosen.emit(type)
+
+func set_tooltip(str: String):
+	tooltip_label.text = str
+"
+
+[node name="GameIntro" type="Node2D"]
+script = SubResource("GDScript_vac6a")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -507.0
+offset_top = 38.0
+offset_right = 507.0
+offset_bottom = 215.0
+grow_horizontal = 2
+theme = ExtResource("1_xx2ny")
+theme_override_font_sizes/normal_font_size = 101
+bbcode_enabled = true
+text = "[center]CHOOSE A WEAPON[/center]"
+
+[node name="ReferenceRect" type="ReferenceRect" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -442.0
+offset_top = -57.0
+offset_right = 442.0
+offset_bottom = 185.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="CanvasLayer/ReferenceRect"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 59.0
+offset_right = 242.0
+offset_bottom = 211.0
+scale = Vector2(0.825019, 0.825019)
+theme = ExtResource("1_xx2ny")
+icon = ExtResource("2_4pofw")
+icon_alignment = 1
+script = ExtResource("3_dkwvj")
+tooltip = "[font_size=50]GUMDROP PISTOL[/font_size]
+A versatile weapon.
++1 Upgrade slot to every shop you visit"
+
+[node name="Button2" type="Button" parent="CanvasLayer/ReferenceRect"]
+layout_mode = 0
+offset_left = 256.0
+offset_top = 57.0
+offset_right = 626.0
+offset_bottom = 324.0
+scale = Vector2(0.437526, 0.468887)
+theme = ExtResource("1_xx2ny")
+icon = ExtResource("3_yety4")
+icon_alignment = 1
+script = ExtResource("3_dkwvj")
+tooltip = "[font_size=50]CANDY CORN ASSAULT RIFLE[/font_size]
+A well-rounded weapon, with a high fire rate and moderate damage."
+
+[node name="Button3" type="Button" parent="CanvasLayer/ReferenceRect"]
+layout_mode = 0
+offset_left = 464.0
+offset_top = 57.0
+offset_right = 723.0
+offset_bottom = 264.0
+scale = Vector2(0.608948, 0.608948)
+theme = ExtResource("1_xx2ny")
+icon = ExtResource("4_wh8g6")
+icon_alignment = 1
+script = ExtResource("3_dkwvj")
+tooltip = "[font_size=50]PEPPERMINT SHOTGUN[/font_size]
+A very close-range weapon, but deadly when used in the right way.
+Fires a lot of bullets at once, but has a slow reload speed."
+
+[node name="Button4" type="Button" parent="CanvasLayer/ReferenceRect"]
+layout_mode = 0
+offset_left = 673.0
+offset_top = 58.0
+offset_right = 870.0
+offset_bottom = 210.0
+scale = Vector2(0.825019, 0.825019)
+theme = ExtResource("1_xx2ny")
+icon_alignment = 1
+script = ExtResource("3_dkwvj")
+
+[node name="Marker2D" type="Marker2D" parent="CanvasLayer"]
+position = Vector2(380, 471)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Marker2D"]
+offset_left = 13.0
+offset_top = 13.0
+offset_right = 388.0
+offset_bottom = 858.0
+scale = Vector2(0.634408, 0.634408)
+mouse_filter = 2
+theme = ExtResource("1_xx2ny")
+bbcode_enabled = true
+
+[connection signal="pressed" from="CanvasLayer/ReferenceRect/Button" to="." method="_on_button_pressed" binds= [0]]
+[connection signal="pressed" from="CanvasLayer/ReferenceRect/Button2" to="." method="_on_button_pressed" binds= [1]]
+[connection signal="pressed" from="CanvasLayer/ReferenceRect/Button3" to="." method="_on_button_pressed" binds= [2]]
+[connection signal="pressed" from="CanvasLayer/ReferenceRect/Button4" to="." method="_on_button_pressed" binds= [3]]

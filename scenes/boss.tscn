@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://bcn6ktxygb7qs"]
+
+[ext_resource type="Texture2D" uid="uid://disxf14wupqph" path="res://icon.svg" id="1_u8dwf"]
+[ext_resource type="Script" path="res://scripts/Boss.gd" id="2_uwc6v"]
+
+[sub_resource type="GDScript" id="GDScript_6gayd"]
+script/source = "extends Sprite3D
+
+const FADEOUT_TIMER = 1.0
+
+var is_dying
+var die_timer
+
+func die():
+	is_dying = true
+	die_timer = FADEOUT_TIMER
+
+func _on_area_body_entered(body):
+	if body is Player:
+		body.try_damage()
+	else:
+		push_warning(\"Object with player layer isn't the player??\")
+"
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hces6"]
+
+[node name="Boss" type="Node3D"]
+script = ExtResource("2_uwc6v")
+
+[node name="Sprite" type="Sprite3D" parent="."]
+transform = Transform3D(2.78214, 0, 0, 0, 2.78214, 0, 0, 0, 2.78214, 0, 0, 0)
+texture = ExtResource("1_u8dwf")
+
+[node name="Bullet" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.21705, 2.97768, 0)
+visible = false
+texture = ExtResource("1_u8dwf")
+script = SubResource("GDScript_6gayd")
+
+[node name="Area3D" type="Area3D" parent="Bullet"]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bullet/Area3D"]
+shape = SubResource("SphereShape3D_hces6")
+
+[connection signal="body_entered" from="Bullet/Area3D" to="Bullet" method="_on_area_body_entered"]

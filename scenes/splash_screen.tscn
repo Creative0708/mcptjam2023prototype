@@ -1,0 +1,107 @@
+[gd_scene load_steps=6 format=3 uid="uid://x873m5ek7uh7"]
+
+[ext_resource type="Texture2D" uid="uid://bix57ivi3031i" path="res://textures/cementserial.png" id="1_kgvpx"]
+
+[sub_resource type="GDScript" id="GDScript_sgnm0"]
+script/source = "extends CanvasLayer
+
+signal done
+
+func _ready():
+	$AnimationPlayer.play(\"splash_screen\")
+
+var is_done = false
+
+func _input(event):
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		done.emit()
+		is_done = true
+
+func _on_animation_player_animation_finished(anim_name):
+	if not is_done:
+		done.emit()
+		is_done = true # for good measure
+"
+
+[sub_resource type="Animation" id="Animation_pa4gw"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cementserial:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Cementserial:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.378952, 0.378952)]
+}
+
+[sub_resource type="Animation" id="Animation_pt40x"]
+resource_name = "splash_screen"
+length = 3.5
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cementserial:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.1, 0.620819, 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 0.00237367, -0.2, 0.431038, 0.25, 0),
+"times": PackedFloat32Array(0, 0.9, 2.5, 3.5)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Cementserial:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 3.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.314, 0.314), Vector2(0.408, 0.408)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mgqpt"]
+_data = {
+"RESET": SubResource("Animation_pa4gw"),
+"splash_screen": SubResource("Animation_pt40x")
+}
+
+[node name="SplashScreen" type="CanvasLayer"]
+script = SubResource("GDScript_sgnm0")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Cementserial" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(589, 335)
+scale = Vector2(0.378952, 0.378952)
+texture = ExtResource("1_kgvpx")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mgqpt")
+}
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

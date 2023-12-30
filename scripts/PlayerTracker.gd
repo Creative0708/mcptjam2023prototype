@@ -1,6 +1,6 @@
 extends Marker2D
 
-@onready var player = $"../SubViewportContainer/SubViewport/Player"
+@onready var player = $"../../SubViewportContainer/SubViewport/Player"
 
 const TRACKING_LERP_FAC = 30
 
